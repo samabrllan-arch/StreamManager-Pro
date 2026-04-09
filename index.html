@@ -703,7 +703,17 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
     ═══════════════════════════════════════ -->
     <div id="plan-codigos" style="display:none;opacity:0;">
 
-        <!-- Tarjeta explicativa -->
+        <div class="global-discount-banner">
+            <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
+            <p>Durante el mes de abril, cada página tendrá un 20% de descuento automático. ¡Aprovecha ahora!</p>
+            <div class="timer-container">
+                <div class="timer-box"><span class="timer-number days">00</span><span class="timer-label">Días</span></div>
+                <div class="timer-box"><span class="timer-number hours">00</span><span class="timer-label">Horas</span></div>
+                <div class="timer-box"><span class="timer-number minutes">00</span><span class="timer-label">Min</span></div>
+                <div class="timer-box"><span class="timer-number seconds">00</span><span class="timer-label">Seg</span></div>
+            </div>
+        </div>
+
         <div class="codigos-intro">
             <div class="codigos-intro-icon">🔑</div>
             <h3 class="codigos-intro-title">¿Qué es la Página de Códigos?</h3>
@@ -719,10 +729,8 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
             </div>
         </div>
 
-        <!-- Grid de 3 tarjetas -->
         <div class="pricing-grid">
 
-            <!-- Mensual -->
             <div class="price-card">
                 <span class="card-plan-tag">Mensualidad</span>
                 <h3>Códigos Mensual</h3>
@@ -749,13 +757,20 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 </div>
             </div>
 
-            <!-- De por vida (POPULAR) -->
             <div class="price-card premium-card">
                 <div class="badge">MEJOR VALOR</div>
                 <span class="card-plan-tag">De por Vida</span>
                 <h3>Códigos Permanente</h3>
                 <p class="price-summary">Un solo pago y la página es tuya para siempre. Sin renovaciones ni sorpresas mensuales. La opción más inteligente.</p>
-                <div class="price-row"><span class="price-from">Precio </span><div class="price">$1.500.000</div></div>
+                
+                <div class="price-row">
+                    <span class="price-from">Precio </span>
+                    <div class="price" style="display:flex; flex-direction:column; line-height:1;">
+                        <span style="font-size:1.1rem; text-decoration:line-through; color:var(--muted); font-weight:600; margin-bottom:4px;">$1.500.000</span>
+                        $1.200.000
+                    </div>
+                </div>
+                
                 <span class="price-period">COP — pago único</span>
                 <div class="server-note">
                     <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div></div>
@@ -773,16 +788,23 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 </ul>
                 <div class="card-actions">
                     <button class="btn-detail" onclick="openModal('codigos-vida')">📄 Ver explicación detallada</button>
-                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20la%20Página%20de%20Códigos%20de%20por%20vida" target="_blank" class="btn-contract">Comprar De Por Vida</a>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20la%20Página%20de%20Códigos%20de%20por%20vida%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar De Por Vida</a>
                 </div>
             </div>
 
-            <!-- Derechos totales -->
             <div class="price-card">
                 <span class="card-plan-tag">Derechos Totales</span>
                 <h3>Códigos con Derechos</h3>
                 <p class="price-summary">Adquiere el código fuente completo. Modifícala, revéndela o úsala bajo tu propia marca sin ninguna restricción.</p>
-                <div class="price-row"><span class="price-from">Precio </span><div class="price">$2.500.000</div></div>
+                
+                <div class="price-row">
+                    <span class="price-from">Precio </span>
+                    <div class="price" style="display:flex; flex-direction:column; line-height:1;">
+                        <span style="font-size:1.1rem; text-decoration:line-through; color:var(--muted); font-weight:600; margin-bottom:4px;">$2.500.000</span>
+                        $2.000.000
+                    </div>
+                </div>
+                
                 <span class="price-period">COP — pago único</span>
                 <div class="server-note">
                     <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div></div>
@@ -801,18 +823,15 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 </ul>
                 <div class="card-actions">
                     <button class="btn-detail" onclick="openModal('codigos-derechos')">📄 Ver explicación detallada</button>
-                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20los%20Derechos%20Totales%20de%20la%20Página%20de%20Códigos" target="_blank" class="btn-contract btn-outline">Comprar Derechos</a>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20los%20Derechos%20Totales%20de%20la%20Página%20de%20Códigos%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract btn-outline">Comprar Derechos</a>
                 </div>
             </div>
 
-        </div><!-- /pricing-grid codigos -->
-
-        <!-- Nota aclaratoria -->
-        <div class="codigos-compare">
+        </div><div class="codigos-compare">
             💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, prueba el plan mensual un mes. Si ya sabes que la necesitas, el pago de por vida te ahorra después de 15 meses. Si quieres ofrecerla a tus propios clientes como servicio, elige los Derechos Totales.
         </div>
 
-    </div><!-- /plan-codigos -->
+    </div>
 </section>
 
 <!-- MODAL -->
