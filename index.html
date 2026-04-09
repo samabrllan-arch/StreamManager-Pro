@@ -491,95 +491,89 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         MENSUALIDAD
-    ═══════════════════════════════════════ -->
-    <div id="plan-mensual" class="pricing-grid" style="display:grid;opacity:1;">
-       <div class="codigos-compare" style="max-width: 800px; margin: 2rem auto 0; background: var(--server-note-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem 1.8rem; text-align: left; font-size: 0.95rem; color: var(--muted); line-height: 1.7;">
-            💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, el plan <b>Básico</b> es perfecto para organizarte. Si quieres ahorrar tiempo y entregar cuentas sin mover un dedo, el plan <b>Estándar</b> es la mejor opción calidad-precio. Si quieres que tu negocio sea 100% automático (cobros y entregas), el <b>Premium</b> es para ti.
+    <div id="plan-mensual" style="display:grid;opacity:1;">
+        <div class="pricing-grid">
+            <div class="price-card">
+                <span class="card-plan-tag">Mensualidad</span>
+                <h3>Básico</h3>
+                <p class="price-summary">Ideal para empezar de forma organizada. Lleva el control total de tu catálogo sin complicaciones.</p>
+                <div class="price-row"><span class="price-from">Desde </span><div class="price">$100.000</div></div>
+                <span class="price-period">COP / mes</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. sujeto a cuota mensual.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list">
+                    <li>Inventario de cuentas centralizado</li>
+                    <li>Control detallado de ventas y usuarios</li>
+                    <li>Hosting incluido en la mensualidad</li>
+                    <li>Panel de administración intuitivo</li>
+                    <li>Soporte técnico personalizado</li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('basico')">📄 Ver explicación detallada</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Básico" target="_blank" class="btn-contract btn-outline">Contratar Básico</a>
+                </div>
+            </div>
+            <div class="price-card premium-card">
+                <div class="badge">MÁS POPULAR</div>
+                <span class="card-plan-tag">Mensualidad</span>
+                <h3>Estándar</h3>
+                <p class="price-summary">Automatiza una parte crucial de tu operación y ahorra tiempo atendiendo con mucha más velocidad.</p>
+                <div class="price-row"><span class="price-from">Desde </span><div class="price">$150.000</div></div>
+                <span class="price-period">COP / mes</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. sujeto a cuota mensual.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list">
+                    <li>Todo lo del plan Básico</li>
+                    <li><b>Lectura de códigos de servicios</b></li>
+                    <li><b>Recargas automáticas (Bancolombia)</b></li>
+                    <li>Elige UN módulo al contratar</li>
+                    <li><b>Incluye una implementación inicial</b></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('estandar')">📄 Ver explicación detallada</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Estándar" target="_blank" class="btn-contract">Contratar Estándar</a>
+                </div>
+            </div>
+            <div class="price-card">
+                <span class="card-plan-tag">Mensualidad</span>
+                <h3>Premium</h3>
+                <p class="price-summary">Automatización total, cero dolores de cabeza. Tu negocio en piloto automático con todas las funciones activas.</p>
+                <div class="price-row"><span class="price-from">Desde </span><div class="price">$200.000</div></div>
+                <span class="price-period">COP / mes</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. sujeto a cuota mensual.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list">
+                    <li>Todo lo del plan Estándar</li>
+                    <li><b>Lectura de códigos activa</b></li>
+                    <li><b>Recargas automáticas activas</b></li>
+                    <li>Ambos módulos simultáneos</li>
+                    <li>Soporte prioritario personalizado</li>
+                    <li><b>Incluye dos implementaciones</b></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('premium')">📄 Ver explicación detallada</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Premium" target="_blank" class="btn-contract btn-outline">Contratar Premium</a>
+                </div>
+            </div>
         </div>
-        <!-- Básico -->
-        <div class="price-card">
-            <span class="card-plan-tag">Mensualidad</span>
-            <h3>Básico</h3>
-            <p class="price-summary">Ideal para empezar de forma organizada. Lleva el control total de tu catálogo sin complicaciones.</p>
-            <div class="price-row"><span class="price-from">Desde </span><div class="price">$100.000</div></div>
-            <span class="price-period">COP / mes</span>
-            <div class="server-note">
-                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. sujeto a cuota mensual.</div></div>
-                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
-            </div>
-            <div class="divider"></div>
-            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
-            <ul class="features-list">
-                <li>Inventario de cuentas centralizado</li>
-                <li>Control detallado de ventas y usuarios</li>
-                <li>Hosting incluido en la mensualidad</li>
-                <li>Panel de administración intuitivo</li>
-                <li>Soporte técnico personalizado</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-detail" onclick="openModal('basico')">📄 Ver explicación detallada</button>
-                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Básico" target="_blank" class="btn-contract btn-outline">Contratar Básico</a>
-            </div>
-        </div>
-        <!-- Estándar -->
-        <div class="price-card premium-card">
-            <div class="badge">MÁS POPULAR</div>
-            <span class="card-plan-tag">Mensualidad</span>
-            <h3>Estándar</h3>
-            <p class="price-summary">Automatiza una parte crucial de tu operación y ahorra tiempo atendiendo con mucha más velocidad.</p>
-            <div class="price-row"><span class="price-from">Desde </span><div class="price">$150.000</div></div>
-            <span class="price-period">COP / mes</span>
-            <div class="server-note">
-                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. sujeto a cuota mensual.</div></div>
-                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
-            </div>
-            <div class="divider"></div>
-            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
-            <ul class="features-list">
-                <li>Todo lo del plan Básico</li>
-                <li><b>Lectura de códigos de servicios</b></li>
-                <li><b>Recargas automáticas (Bancolombia)</b></li>
-                <li>Elige UN módulo al contratar</li>
-                <li><b>Incluye una implementación inicial</b></li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-detail" onclick="openModal('estandar')">📄 Ver explicación detallada</button>
-                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Estándar" target="_blank" class="btn-contract">Contratar Estándar</a>
-            </div>
-        </div>
-        <!-- Premium -->
-        <div class="price-card">
-            <span class="card-plan-tag">Mensualidad</span>
-            <h3>Premium</h3>
-            <p class="price-summary">Automatización total, cero dolores de cabeza. Tu negocio en piloto automático con todas las funciones activas.</p>
-            <div class="price-row"><span class="price-from">Desde </span><div class="price">$200.000</div></div>
-            <span class="price-period">COP / mes</span>
-            <div class="server-note">
-                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. sujeto a cuota mensual.</div></div>
-                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
-            </div>
-            <div class="divider"></div>
-            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
-            <ul class="features-list">
-                <li>Todo lo del plan Estándar</li>
-                <li><b>Lectura de códigos activa</b></li>
-                <li><b>Recargas automáticas activas</b></li>
-                <li>Ambos módulos simultáneos</li>
-                <li>Soporte prioritario personalizado</li>
-                <li><b>Incluye dos implementaciones</b></li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-detail" onclick="openModal('premium')">📄 Ver explicación detallada</button>
-                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Premium" target="_blank" class="btn-contract btn-outline">Contratar Premium</a>
-            </div>
+        <div class="codigos-compare" style="max-width: 800px; margin: 2rem auto 0; background: var(--server-note-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem 1.8rem; text-align: left; font-size: 0.95rem; color: var(--muted); line-height: 1.7;">
+            💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, el plan <b>Básico</b> es perfecto para organizarte. Si quieres ahorrar tiempo y automatizar la parte más tediosa de tu operación, el plan <b>Estándar</b> es la mejor opción calidad-precio. Si quieres que tu negocio sea 100% automático, el <b>Premium</b> es para ti. <br><br>
+            🖥️ <strong>Sobre el servidor:</strong> Recomendamos el Servidor Estándar (incluido) para catálogos pequeños, pero si manejas un volumen alto de clientes, el <b>Servidor Premium</b> garantiza una operación estable 24/7.
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         PAGO ÚNICO
-    ═══════════════════════════════════════ -->
     <div id="plan-unico" style="display:none;opacity:0;">
         <div class="global-discount-banner">
             <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
@@ -592,10 +586,6 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
             </div>
         </div>
         <div class="pricing-grid">
-           <div class="codigos-compare" style="max-width: 800px; margin: 2rem auto 0; background: var(--server-note-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem 1.8rem; text-align: left; font-size: 0.95rem; color: var(--muted); line-height: 1.7;">
-            💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, el plan <b>Básico</b> es perfecto para organizarte. Si quieres ahorrar tiempo y entregar cuentas sin mover un dedo, el plan <b>Estándar</b> es la mejor opción calidad-precio. Si quieres que tu negocio sea 100% automático (cobros y entregas), el <b>Premium</b> es para ti.
-        </div>
-            <!-- Básico -->
             <div class="price-card">
                 <span class="card-plan-tag">Pago Único</span>
                 <h3>Sistema Básico</h3>
@@ -614,7 +604,6 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                     <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Básico%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract btn-outline">Comprar Sistema</a>
                 </div>
             </div>
-            <!-- Premium -->
             <div class="price-card premium-card">
                 <div class="badge">TODO INCLUIDO</div>
                 <span class="card-plan-tag">Pago Único</span>
@@ -634,7 +623,6 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                     <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Premium%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar Premium</a>
                 </div>
             </div>
-            <!-- Intermedio -->
             <div class="price-card">
                 <span class="card-plan-tag">Pago Único</span>
                 <h3>Intermedio</h3>
@@ -654,13 +642,14 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 </div>
             </div>
         </div>
+        <div class="codigos-compare" style="max-width: 800px; margin: 2rem auto 0; background: var(--server-note-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem 1.8rem; text-align: left; font-size: 0.95rem; color: var(--muted); line-height: 1.7;">
+            💡 <strong>¿Cuál elegir?</strong> Si quieres automatizar entregas y librarte de las mensualidades del sistema base, el <b>Sistema Intermedio</b> es ideal (recuperas la inversión en menos de un año). Si quieres ser el dueño absoluto de una máquina de ventas 100% automática, el <b>Sistema Premium</b> es la inversión más inteligente a largo plazo. <br><br>
+            🖥️ <strong>Sobre el servidor:</strong> Aunque pagues la página de contado, el motor interno (API) requiere alojamiento mensual. Te recomendamos el <b>Servidor Premium</b> para que tu tienda visual y tus entregas jamás presenten caídas.
+        </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         DERECHOS TOTALES
-    ═══════════════════════════════════════ -->
-    <div id="plan-derechos" style="display:none;opacity:0;max-width:540px;margin:0 auto;">
-        <div class="global-discount-banner">
+    <div id="plan-derechos" style="display:none;opacity:0;">
+        <div class="global-discount-banner" style="max-width:540px;">
             <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
             <p>Durante el mes de abril, cada página tendrá un 20% de descuento automático. ¡Aprovecha ahora!</p>
             <div class="timer-container">
@@ -670,7 +659,7 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 <div class="timer-box"><span class="timer-number seconds">00</span><span class="timer-label">Seg</span></div>
             </div>
         </div>
-        <div class="price-card premium-card" style="text-align:center;">
+        <div class="price-card premium-card" style="text-align:center; max-width:540px; margin:0 auto;">
             <div class="badge">PROPIEDAD ABSOLUTA</div>
             <span class="card-plan-tag" style="display:block;">Licencia Completa</span>
             <h3>Código Fuente & Derechos</h3>
@@ -702,11 +691,12 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Código%20Fuente%20y%20Derechos%20Completos%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar Derechos Totales</a>
             </div>
         </div>
+        <div class="codigos-compare" style="max-width: 540px; margin: 2rem auto 0; background: var(--server-note-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem 1.8rem; text-align: left; font-size: 0.95rem; color: var(--muted); line-height: 1.7;">
+            💡 <strong>Sobre los Derechos:</strong> Esta opción no es para el vendedor promedio. Es exclusiva para visionarios que quieren montar su propio ecosistema de ventas, crear una marca de software (SaaS) y cobrar mensualidades a otros revendedores. Literalmente te entregamos la receta secreta. <br><br>
+            🖥️ <strong>Sobre el servidor:</strong> Al adquirir el código fuente completo, eres el único responsable del alojamiento de la base de datos (Backend) y de lo visual (Frontend). Nosotros solo te guiamos en la instalación inicial.
+        </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         🔑 PÁGINA DE CÓDIGOS — NUEVO
-    ═══════════════════════════════════════ -->
     <div id="plan-codigos" style="display:none;opacity:0;">
 
         <div class="global-discount-banner">
@@ -833,12 +823,12 @@ footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; 
                 </div>
             </div>
 
-        </div><div class="codigos-compare">
-            💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, prueba el plan mensual un mes. Si ya sabes que la necesitas, el pago de por vida te ahorra después de 15 meses. Si quieres ofrecerla a tus propios clientes como servicio, elige los Derechos Totales.
+        </div><div class="codigos-compare" style="max-width: 800px; margin: 2rem auto 0; background: var(--server-note-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem 1.8rem; text-align: left; font-size: 0.95rem; color: var(--muted); line-height: 1.7;">
+            💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, prueba el plan mensual un mes. Si ya sabes que la necesitas, el pago de por vida te ahorra después de 15 meses. Si quieres ofrecerla a tus propios clientes como servicio, elige los Derechos Totales. <br><br>
+            🖥️ <strong>Sobre el servidor:</strong> Si eliges la opción de "Derechos Totales", tú te encargas del hosting. Para el resto de opciones, el <b>Servidor Premium</b> te garantiza una entrega rápida y sin caídas de los códigos.
         </div>
 
-    </div>
-</section>
+    </div></section>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
