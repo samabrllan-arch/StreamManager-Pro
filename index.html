@@ -5,1064 +5,405 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StreamManager Pro | Plataforma de Streaming</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<style id="promo-styles">
-    /* ESTILOS DE LA SECCIÓN PORTAFOLIO */
-    .sales-container { max-width: 1200px; margin: 60px auto 80px; padding: 0 20px; text-align: center; overflow: hidden; }
-    .promo-header { margin-bottom: 2.5rem; }
-    .promo-header h2 { font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800; margin-bottom: 1rem; color: #fff; line-height: 1.2; }
-    .promo-header h2 span { color: #2563eb; }
-    .promo-header p { color: #a1a1aa; font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
-
-    /* SLIDER INFINITO AUTOMÁTICO */
-    .demo-slider {
-        width: 100%;
-        overflow: hidden;
-        padding: 20px 0;
-        position: relative;
-        /* Difuminado a los lados para efecto elegante */
-        -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-    }
-
-    .demo-track {
-        display: flex;
-        gap: 25px;
-        width: max-content;
-        /* Animación que dura 30 segundos, lineal e infinita */
-        animation: scrollTrack 30s linear infinite;
-    }
-
-    /* Pausar cuando el mouse pasa por encima */
-    .demo-track:hover {
-        animation-play-state: paused;
-    }
-
-    @keyframes scrollTrack {
-        0% { transform: translateX(0); }
-        /* Se desplaza exactamente la mitad del contenedor (que tiene los elementos duplicados) */
-        100% { transform: translateX(calc(-50% - 12.5px)); }
-    }
-
-    .demo-card { 
-        background: #0a0a0a; 
-        border: 1px solid #27272a; 
-        border-radius: 12px; 
-        overflow: hidden; 
-        transition: all 0.3s ease; 
-        display: flex; 
-        flex-direction: column; 
-        width: 320px; /* Ancho fijo para el slider */
-        flex-shrink: 0;
-    }
-    .demo-card:hover { border-color: #2563eb; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2); }
-    .demo-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #27272a; }
-    .demo-card-info { padding: 15px; text-align: left; flex-grow: 1; display: flex; align-items: center; }
-    .demo-card-title { font-weight: 700; font-size: 1rem; color: #fff; display: flex; align-items: center; gap: 10px; }
-
-    .cta-button { background: #2563eb; color: white; padding: 18px 40px; border-radius: 50px; font-size: 1.1rem; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4); border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; margin-top: 2rem; }
-    .cta-button:hover { transform: scale(1.05); background: #1d4ed8; color: white; }
-    
-    @media (max-width: 768px) {
-        .promo-header h2 { font-size: 2rem; }
-        .demo-card { width: 280px; }
-        .demo-track { animation: scrollTrack 20s linear infinite; } /* Un poco más rápido en móvil */
-    }
-
-    /* ESTILOS DEL TEMPORIZADOR GLOBAL EN VERDE */
-    .global-discount-banner {
-        max-width: 980px;
-        margin: 0 auto 2rem auto;
-        background: rgba(16, 185, 129, 0.1); /* Verde claro transparente */
-        border: 2px solid rgba(16, 185, 129, 0.6); /* Borde verde */
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15); /* Sombra verde */
-    }
-    
-    .global-discount-banner h3 {
-        color: #10b981; /* Verde vibrante */
-        font-family: 'Syne', sans-serif;
-        font-size: 1.5rem;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    .global-discount-banner p {
-        color: var(--text-main);
-        font-size: 1rem;
-        margin-bottom: 15px;
-    }
-
-    .timer-container {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-    }
-    .timer-box {
-        background: #10b981; /* Fondo verde sólido para las cajitas */
-        color: white;
-        padding: 10px 15px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 70px;
-        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); /* Sombra verde */
-    }
-    .timer-number {
-        font-family: 'Syne', sans-serif;
-        font-size: 1.8rem;
-        font-weight: 800;
-        line-height: 1;
-    }
-    .timer-label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin-top: 5px;
-        opacity: 0.9;
-    }
-</style>
-
-
-<style id="style-styles.css">/* styles.css */
-/* =================================================================================
-   styles.css - STREAMMANAGER PRO (Premium UI)
-   Incluye Modo Claro / Oscuro, Textos Ampliados y Paleta Slate/Blue
-================================================================================= */
-
+<style>
 /* ========================
-   IMPORTACIÓN DE FUENTES PREMIUM
+   IMPORTACIÓN EXTRA
 ======================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap');
 
 /* ========================
-   VARIABLES & RESET (TEMA CLARO POR DEFECTO)
+   VARIABLES
 ======================== */
 :root {
-    /* Paleta Clara */
-    --bg: #f8fafc; 
+    --bg: #f8fafc;
     --white: #ffffff;
-    --dark: #0f172a; 
-    --dark-2: #1e293b; 
-    --muted: #475569; 
-    --muted-light: #94a3b8; 
-    
-    /* Acentos (Azul vibrante y moderno) */
-    --accent: #2563eb; 
-    --accent-hover: #1d4ed8; 
-    --accent-light: #dbeafe; 
-    --accent-glow: rgba(37, 99, 235, 0.25);
+    --dark: #0f172a;
+    --dark-2: #1e293b;
+    --muted: #475569;
+    --muted-light: #94a3b8;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-light: #dbeafe;
+    --accent-glow: rgba(37,99,235,0.25);
     --accent-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
-    
-    /* Estados */
-    --success: #10b981; 
+    --success: #10b981;
     --success-light: #d1fae5;
     --danger: #ef4444;
     --warning: #f59e0b;
-    
-    /* Estructura y UI */
-    --border-color: #e2e8f0; 
+    --border-color: #e2e8f0;
     --border-strong: #cbd5e1;
-    --nav-bg: rgba(248, 250, 252, 0.88);
+    --nav-bg: rgba(248,250,252,0.88);
     --card-bg: #ffffff;
-    --card-hover-border: rgba(37, 99, 235, 0.3);
+    --card-hover-border: rgba(37,99,235,0.3);
     --topbar-bg: #f1f5f9;
     --server-note-bg: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    --modal-overlay: rgba(15, 23, 42, 0.7);
-    --discount-bg: rgba(16, 185, 129, 0.15);
+    --modal-overlay: rgba(15,23,42,0.7);
+    --discount-bg: rgba(16,185,129,0.15);
     --discount-text: #047857;
-
-    /* Sombras */
-    --shadow-xs: 0 1px 4px rgba(15, 23, 42, 0.06);
-    --shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.08);
-    --shadow-md: 0 12px 40px rgba(15, 23, 42, 0.12);
-    --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.16);
-    
-    /* Radios */
+    --shadow-xs: 0 1px 4px rgba(15,23,42,0.06);
+    --shadow-sm: 0 4px 16px rgba(15,23,42,0.08);
+    --shadow-md: 0 12px 40px rgba(15,23,42,0.12);
+    --shadow-lg: 0 24px 60px rgba(15,23,42,0.16);
     --radius: 16px;
     --radius-lg: 24px;
 }
 
-/* ========================
-   TEMA OSCURO (DARK MODE)
-======================== */
 [data-theme="dark"] {
-    --bg: #0b1120; /* Fondo principal oscuro profundo */
-    --white: #1e293b; /* Tarjetas en modo oscuro */
-    --dark: #f8fafc; /* Textos principales claros */
+    --bg: #0b1120;
+    --white: #1e293b;
+    --dark: #f8fafc;
     --dark-2: #e2e8f0;
-    --muted: #94a3b8; /* Textos secundarios */
+    --muted: #94a3b8;
     --muted-light: #64748b;
-    
-    /* Acentos adaptados para contraste en oscuro */
-    --accent: #3b82f6; 
-    --accent-hover: #60a5fa; 
-    --accent-light: rgba(59, 130, 246, 0.15); 
-    --accent-glow: rgba(59, 130, 246, 0.3);
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --accent-light: rgba(59,130,246,0.15);
+    --accent-glow: rgba(59,130,246,0.3);
     --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-    
-    /* Estructura UI Oscura */
-    --border-color: #1e293b; 
+    --border-color: #1e293b;
     --border-strong: #334155;
-    --nav-bg: rgba(11, 17, 32, 0.88);
+    --nav-bg: rgba(11,17,32,0.88);
     --card-bg: #0f172a;
-    --card-hover-border: rgba(59, 130, 246, 0.5);
+    --card-hover-border: rgba(59,130,246,0.5);
     --topbar-bg: #0b1120;
     --server-note-bg: linear-gradient(135deg, #0f172a, #0b1120);
-    --modal-overlay: rgba(0, 0, 0, 0.8);
-    --discount-bg: rgba(16, 185, 129, 0.15);
+    --modal-overlay: rgba(0,0,0,0.8);
+    --discount-bg: rgba(16,185,129,0.15);
     --discount-text: #34d399;
-
-    /* Sombras más intensas para oscuro */
-    --shadow-xs: 0 1px 4px rgba(0, 0, 0, 0.4);
-    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.8);
+    --shadow-xs: 0 1px 4px rgba(0,0,0,0.4);
+    --shadow-sm: 0 4px 16px rgba(0,0,0,0.5);
+    --shadow-md: 0 12px 40px rgba(0,0,0,0.6);
+    --shadow-lg: 0 24px 60px rgba(0,0,0,0.8);
 }
 
-/* ========================
-   BASE Y RESET
-======================== */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-/* AUMENTO DE TEXTO BASE: 17px para mejor lectura */
-html { scroll-behavior: smooth; font-size: 17px; } 
-
-body {
-    background: var(--bg);
-    color: var(--dark);
-    font-family: 'Inter', sans-serif; 
-    line-height: 1.65;
-    overflow-x: hidden;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-a { text-decoration: none; }
-button { font-family: 'Inter', sans-serif; cursor: pointer; outline: none; }
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:17px; }
+body { background:var(--bg); color:var(--dark); font-family:'Inter',sans-serif; line-height:1.65; overflow-x:hidden; transition:background-color 0.3s,color 0.3s; }
+a { text-decoration:none; }
+button { font-family:'Inter',sans-serif; cursor:pointer; outline:none; }
 
 /* ========================
    NAVBAR
 ======================== */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5%;
-    height: 76px; 
-    background: var(--nav-bg);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    border-bottom: 1px solid var(--border-color);
-    transition: box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
-}
-.navbar.scrolled { box-shadow: var(--shadow-md); }
-
-.logo {
-    font-family: 'Outfit', sans-serif; 
-    font-size: 1.5rem; 
-    font-weight: 900;
-    color: var(--dark);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    letter-spacing: -0.5px;
-}
-.logo em { font-style: normal; color: var(--accent); }
-
-.nav-links { display: flex; gap: 8px; align-items: center; }
-
-.btn-nav {
-    color: var(--muted);
-    font-weight: 700; 
-    font-size: 0.95rem; 
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-    background: transparent;
-}
-.btn-nav:hover { background: var(--card-bg); border-color: var(--border-color); color: var(--dark); }
-
-/* Botón Tema Oscuro/Claro */
-.theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    padding: 0.5rem;
-    border-radius: 50%;
-}
-.theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
-
-.btn-cta-nav {
-    background: var(--accent-gradient);
-    color: #ffffff !important; 
-    font-weight: 700;
-    font-size: 0.95rem; 
-    padding: 0.7rem 1.5rem;
-    border-radius: 12px;
-    transition: all 0.25s;
-    display: flex; align-items: center; gap: 6px;
-    box-shadow: 0 4px 15px var(--accent-glow);
-}
-.btn-cta-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--accent-glow); filter: brightness(1.1); }
+.navbar { display:flex; justify-content:space-between; align-items:center; padding:0 5%; height:76px; background:var(--nav-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); position:fixed; width:100%; top:0; z-index:1000; border-bottom:1px solid var(--border-color); transition:box-shadow 0.3s,background-color 0.3s,border-color 0.3s; }
+.navbar.scrolled { box-shadow:var(--shadow-md); }
+.logo { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:900; color:var(--dark); display:flex; align-items:center; gap:2px; letter-spacing:-0.5px; }
+.logo em { font-style:normal; color:var(--accent); }
+.nav-links { display:flex; gap:8px; align-items:center; }
+.btn-nav { color:var(--muted); font-weight:700; font-size:0.95rem; padding:0.6rem 1.2rem; border-radius:10px; transition:all 0.2s; border:1px solid transparent; background:transparent; }
+.btn-nav:hover { background:var(--card-bg); border-color:var(--border-color); color:var(--dark); }
+.theme-toggle { display:flex; align-items:center; justify-content:center; font-size:1.2rem; padding:0.5rem; border-radius:50%; }
+.theme-toggle:hover { transform:scale(1.1) rotate(15deg); }
+.btn-cta-nav { background:var(--accent-gradient); color:#fff!important; font-weight:700; font-size:0.95rem; padding:0.7rem 1.5rem; border-radius:12px; transition:all 0.25s; display:flex; align-items:center; gap:6px; box-shadow:0 4px 15px var(--accent-glow); }
+.btn-cta-nav:hover { transform:translateY(-2px); box-shadow:0 8px 25px var(--accent-glow); filter:brightness(1.1); }
 
 /* ========================
-   HERO SECTION
+   PROMO SECTION (slider infinito)
 ======================== */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 130px 5% 60px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, var(--accent-light) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 10% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
-    pointer-events: none;
-}
-.hero > * { position: relative; z-index: 1; }
+.sales-container { max-width:1200px; margin:60px auto 80px; padding:0 20px; text-align:center; overflow:hidden; }
+.promo-header { margin-bottom:2.5rem; }
+.promo-header h2 { font-family:'Syne',sans-serif; font-size:2.6rem; font-weight:800; margin-bottom:1rem; color:var(--dark); line-height:1.2; }
+.promo-header h2 span { color:#2563eb; }
+.promo-header p { color:var(--muted); font-size:1.1rem; max-width:700px; margin:0 auto; }
 
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--card-bg);
-    color: var(--accent);
-    font-size: 0.85rem; 
-    font-weight: 800;
-    padding: 8px 18px 8px 14px;
-    border-radius: 30px;
-    margin-bottom: 2rem;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-.hero-badge .dot { width:8px; height:8px; border-radius:50%; background:var(--success); box-shadow:0 0 12px rgba(16, 185, 129, 0.8); animation: pulseDot 2s infinite; }
-@keyframes pulseDot { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+.demo-slider { width:100%; overflow:hidden; padding:20px 0; position:relative; -webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent); mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent); }
+.demo-track { display:flex; gap:25px; width:max-content; animation:scrollTrack 30s linear infinite; }
+.demo-track:hover { animation-play-state:paused; }
+@keyframes scrollTrack { 0%{transform:translateX(0)} 100%{transform:translateX(calc(-50% - 12.5px))} }
+.demo-card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; overflow:hidden; transition:all 0.3s; display:flex; flex-direction:column; width:320px; flex-shrink:0; }
+.demo-card:hover { border-color:#2563eb; transform:translateY(-5px); box-shadow:0 10px 30px rgba(37,99,235,0.2); }
+.demo-card img { width:100%; height:200px; object-fit:cover; border-bottom:1px solid var(--border-color); }
+.demo-card-info { padding:15px; text-align:left; flex-grow:1; display:flex; align-items:center; }
+.demo-card-title { font-weight:700; font-size:1rem; color:var(--dark); display:flex; align-items:center; gap:10px; }
+.cta-button { background:#2563eb; color:white; padding:18px 40px; border-radius:50px; font-size:1.1rem; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:10px; transition:0.3s; box-shadow:0 5px 20px rgba(37,99,235,0.4); border:none; cursor:pointer; text-transform:uppercase; letter-spacing:1px; margin-top:2rem; }
+.cta-button:hover { transform:scale(1.05); background:#1d4ed8; color:white; }
 
-.hero h1 {
-    font-family: 'Outfit', sans-serif; 
-    font-size: clamp(2.8rem, 6vw, 4.8rem); 
-    font-weight: 900;
-    line-height: 1.1; 
-    letter-spacing: -1.5px; 
-    margin-bottom: 1.5rem;
-    max-width: 950px;
-    color: var(--dark);
-}
-.hero h1 em { font-style: normal; color: var(--accent); background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-.hero-sub {
-    color: var(--muted);
-    font-size: 1.2rem; 
-    max-width: 650px; 
-    margin: 0 auto 3rem;
-    line-height: 1.8;
-    font-weight: 500;
-}
-
-.hero-btns {
-    display: flex;
-    gap: 1.2rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 5rem;
-}
-.btn-primary {
-    background: var(--accent-gradient);
-    color: #ffffff !important;
-    padding: 1rem 2.5rem;
-    border-radius: 14px;
-    font-weight: 800;
-    font-size: 1.05rem; 
-    transition: all 0.3s;
-    box-shadow: 0 6px 20px var(--accent-glow);
-    display: inline-flex; align-items: center; gap: 8px;
-}
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--accent-glow); filter: brightness(1.1); }
-
-.btn-secondary {
-    background: var(--card-bg);
-    color: var(--dark) !important;
-    padding: 1rem 2.5rem;
-    border-radius: 14px;
-    font-weight: 800;
-    font-size: 1.05rem; 
-    border: 2px solid var(--border-color);
-    transition: all 0.3s;
-    display: inline-flex; align-items: center; gap: 8px;
-}
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent) !important; transform: translateY(-3px); box-shadow: var(--shadow-md); }
+/* TIMER */
+.global-discount-banner { max-width:980px; margin:0 auto 2rem; background:var(--discount-bg); border:2px solid rgba(16,185,129,0.6); border-radius:16px; padding:20px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 10px 30px rgba(16,185,129,0.15); }
+.global-discount-banner h3 { color:#10b981; font-family:'Syne',sans-serif; font-size:1.5rem; margin-bottom:5px; text-transform:uppercase; letter-spacing:1px; }
+.global-discount-banner p { color:var(--muted); font-size:1rem; margin-bottom:15px; }
+.timer-container { display:flex; gap:15px; justify-content:center; }
+.timer-box { background:#10b981; color:white; padding:10px 15px; border-radius:10px; display:flex; flex-direction:column; align-items:center; min-width:70px; box-shadow:0 4px 10px rgba(16,185,129,0.4); }
+.timer-number { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; line-height:1; }
+.timer-label { font-size:0.7rem; text-transform:uppercase; font-weight:700; margin-top:5px; opacity:0.9; }
 
 /* ========================
-   CARRUSEL (WEB APP MOCKUP)
+   HERO
 ======================== */
-.carousel-wrapper {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-lg), 0 0 0 10px var(--accent-light);
-    overflow: hidden;
-    position: relative;
-    transition: border-color 0.3s;
-}
-.carousel-topbar {
-    display: flex;
-    align-items: center;
-    padding: 14px 24px;
-    background: var(--topbar-bg); 
-    border-bottom: 1px solid var(--border-color);
-    gap: 15px;
-}
+.hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:130px 5% 60px; text-align:center; position:relative; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; background:radial-gradient(ellipse 80% 50% at 50% -10%,var(--accent-light) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 10% 60%,rgba(16,185,129,0.08) 0%,transparent 60%); pointer-events:none; }
+.hero > * { position:relative; z-index:1; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:var(--card-bg); color:var(--accent); font-size:0.85rem; font-weight:800; padding:8px 18px 8px 14px; border-radius:30px; margin-bottom:2rem; border:1px solid var(--border-color); box-shadow:var(--shadow-sm); letter-spacing:0.5px; text-transform:uppercase; }
+.hero-badge .dot { width:8px; height:8px; border-radius:50%; background:var(--success); box-shadow:0 0 12px rgba(16,185,129,0.8); animation:pulseDot 2s infinite; }
+@keyframes pulseDot { 0%{opacity:1} 50%{opacity:0.4} 100%{opacity:1} }
+.hero h1 { font-family:'Outfit',sans-serif; font-size:clamp(2.8rem,6vw,4.8rem); font-weight:900; line-height:1.1; letter-spacing:-1.5px; margin-bottom:1.5rem; max-width:950px; color:var(--dark); }
+.hero h1 em { font-style:normal; color:var(--accent); background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero-sub { color:var(--muted); font-size:1.2rem; max-width:650px; margin:0 auto 3rem; line-height:1.8; font-weight:500; }
+.hero-btns { display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; margin-bottom:5rem; }
+.btn-primary { background:var(--accent-gradient); color:#fff!important; padding:1rem 2.5rem; border-radius:14px; font-weight:800; font-size:1.05rem; transition:all 0.3s; box-shadow:0 6px 20px var(--accent-glow); display:inline-flex; align-items:center; gap:8px; }
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 30px var(--accent-glow); filter:brightness(1.1); }
+.btn-secondary { background:var(--card-bg); color:var(--dark)!important; padding:1rem 2.5rem; border-radius:14px; font-weight:800; font-size:1.05rem; border:2px solid var(--border-color); transition:all 0.3s; display:inline-flex; align-items:center; gap:8px; }
+.btn-secondary:hover { border-color:var(--accent); color:var(--accent)!important; transform:translateY(-3px); box-shadow:var(--shadow-md); }
+
+/* ========================
+   CARRUSEL
+======================== */
+.carousel-wrapper { width:100%; max-width:1100px; margin:0 auto; background:var(--card-bg); border-radius:var(--radius-lg); border:1px solid var(--border-color); box-shadow:var(--shadow-lg),0 0 0 10px var(--accent-light); overflow:hidden; position:relative; transition:border-color 0.3s; }
+.carousel-topbar { display:flex; align-items:center; padding:14px 24px; background:var(--topbar-bg); border-bottom:1px solid var(--border-color); gap:15px; }
 .window-dots { display:flex; gap:8px; }
-.window-dots span { width:12px;height:12px;border-radius:50%;display:block; }
-.wd-r{background:#ef4444;} .wd-y{background:#f59e0b;} .wd-g{background:#10b981;}
-.carousel-url {
-    flex:1; text-align:center;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 6px 16px;
-    font-size: 0.85rem; 
-    color: var(--muted);
-    max-width: 380px;
-    margin: 0 auto;
-    font-family: 'Inter', monospace;
-    font-weight: 600;
-}
-
-.carousel-track-outer {
-    overflow: hidden;
-    position: relative;
-    height: 500px; 
-}
-.carousel-track {
-    display: flex;
-    height: 100%;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.carousel-slide {
-    min-width: 100%;
-    height: 100%;
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    background: #000;
-}
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-}
-
-.carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px; height: 48px; 
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--dark);
-    z-index: 5;
-    box-shadow: var(--shadow-md);
-    transition: all 0.2s;
-}
-.carousel-arrow:hover { background: var(--accent); color: #ffffff; border-color: var(--accent); transform: translateY(-50%) scale(1.1); }
-.carousel-prev { left: 20px; }
-.carousel-next { right: 20px; }
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 16px 0;
-    background: var(--topbar-bg);
-    border-top: 1px solid var(--border-color);
-}
-.dot {
-    width: 10px; height: 10px; 
-    border-radius: 50%;
-    background: var(--border-strong);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.dot.active { background: var(--accent); width: 30px; border-radius: 6px; }
+.window-dots span { width:12px; height:12px; border-radius:50%; display:block; }
+.wd-r{background:#ef4444;}.wd-y{background:#f59e0b;}.wd-g{background:#10b981;}
+.carousel-url { flex:1; text-align:center; background:var(--card-bg); border:1px solid var(--border-color); border-radius:8px; padding:6px 16px; font-size:0.85rem; color:var(--muted); max-width:380px; margin:0 auto; font-family:'Inter',monospace; font-weight:600; }
+.carousel-track-outer { overflow:hidden; position:relative; height:500px; }
+.carousel-track { display:flex; height:100%; transition:transform 0.6s cubic-bezier(0.25,1,0.5,1); }
+.carousel-slide { min-width:100%; height:100%; flex-shrink:0; position:relative; overflow:hidden; background:#000; }
+.carousel-slide img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+.slide-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--topbar-bg),var(--bg)); display:flex; align-items:center; justify-content:center; }
+.placeholder-inner { text-align:center; padding:2rem; }
+.placeholder-icon { font-size:3rem; margin-bottom:0.8rem; opacity:0.35; }
+.placeholder-label { font-family:'Outfit',sans-serif; font-size:1.1rem; font-weight:800; color:var(--muted); margin-bottom:0.4rem; }
+.placeholder-hint { font-size:0.8rem; color:var(--muted-light); max-width:260px; line-height:1.5; }
+.carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); width:48px; height:48px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:bold; color:var(--dark); z-index:5; box-shadow:var(--shadow-md); transition:all 0.2s; }
+.carousel-arrow:hover { background:var(--accent); color:#fff; border-color:var(--accent); transform:translateY(-50%) scale(1.1); }
+.carousel-prev { left:20px; }
+.carousel-next { right:20px; }
+.carousel-dots { display:flex; justify-content:center; gap:8px; padding:16px 0; background:var(--topbar-bg); border-top:1px solid var(--border-color); }
+.dot { width:10px; height:10px; border-radius:50%; background:var(--border-strong); border:none; cursor:pointer; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.dot.active { background:var(--accent); width:30px; border-radius:6px; }
 
 /* ========================
    FEATURES
 ======================== */
-.features-section {
-    padding: 8rem 5% 5rem;
-}
-.section-header { max-width: 1060px; margin: 0 auto 4rem; text-align: center; }
-.section-label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 0.9rem; 
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.2rem;
-    font-family: 'Outfit', sans-serif;
-}
+.features-section { padding:8rem 5% 5rem; }
+.section-header { max-width:1060px; margin:0 auto 4rem; text-align:center; }
+.section-label { display:inline-flex; align-items:center; gap:8px; font-size:0.9rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:1.2rem; font-family:'Outfit',sans-serif; }
 .section-label::before { content:''; display:block; width:24px; height:3px; background:var(--accent); border-radius:3px; }
-
-.section-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(2.4rem, 4vw, 3.4rem); 
-    font-weight: 900;
-    letter-spacing: -1px;
-    margin-bottom: 1rem;
-    line-height: 1.15;
-    color: var(--dark);
-}
-.section-sub {
-    color: var(--muted);
-    font-size: 1.15rem; 
-    max-width: 650px;
-    margin: 0 auto;
-    line-height: 1.8;
-}
-
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-.feature-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 2.5rem;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-    text-align: left;
-}
-.feature-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: var(--shadow-lg); }
-
-.feature-icon {
-    width: 60px; height: 60px; 
-    background: var(--accent-light);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; 
-    margin-bottom: 1.5rem;
-    transition: transform 0.3s;
-}
-.feature-card:hover .feature-icon { transform: scale(1.1) rotate(-5deg); }
-
-.feature-card h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.35rem; 
-    font-weight: 800;
-    margin-bottom: 0.8rem;
-    color: var(--dark);
-}
-.feature-card p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin: 0; }
+.section-title { font-family:'Outfit',sans-serif; font-size:clamp(2.4rem,4vw,3.4rem); font-weight:900; letter-spacing:-1px; margin-bottom:1rem; line-height:1.15; color:var(--dark); }
+.section-sub { color:var(--muted); font-size:1.15rem; max-width:650px; margin:0 auto; line-height:1.8; }
+.feature-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:2rem; max-width:1100px; margin:0 auto; }
+.feature-card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:2.5rem; transition:all 0.3s; box-shadow:var(--shadow-sm); text-align:left; }
+.feature-card:hover { transform:translateY(-8px); border-color:var(--accent); box-shadow:var(--shadow-lg); }
+.feature-icon { width:60px; height:60px; background:var(--accent-light); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin-bottom:1.5rem; transition:transform 0.3s; }
+.feature-card:hover .feature-icon { transform:scale(1.1) rotate(-5deg); }
+.feature-card h3 { font-family:'Outfit',sans-serif; font-size:1.35rem; font-weight:800; margin-bottom:0.8rem; color:var(--dark); }
+.feature-card p { color:var(--muted); font-size:1.05rem; line-height:1.7; margin:0; }
 
 /* ========================
    PRICING
 ======================== */
-.pricing-section {
-    padding: 6rem 5% 8rem;
+.pricing-section { padding:6rem 5% 8rem; text-align:center; }
+
+/* Tab container — scrollable on mobile for 4 tabs */
+.tab-container { display:inline-flex; gap:6px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:8px; margin-bottom:4rem; box-shadow:var(--shadow-sm); flex-wrap:wrap; justify-content:center; }
+.tab-btn { padding:12px 22px; border:none; border-radius:12px; font-weight:800; font-size:0.95rem; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); color:var(--muted); background:transparent; letter-spacing:0.4px; }
+.tab-btn.active { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 15px var(--accent-glow); }
+.tab-btn:hover:not(.active) { background:var(--bg); color:var(--dark); }
+/* Highlight the new Códigos tab */
+.tab-btn.codigos-tab { position:relative; }
+.tab-btn.codigos-tab::after { content:'NUEVO'; position:absolute; top:-10px; right:-4px; background:#10b981; color:#fff; font-size:0.55rem; font-weight:900; padding:2px 7px; border-radius:20px; letter-spacing:1px; }
+
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; align-items:stretch; transition:opacity 0.4s; }
+
+.price-card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:28px; padding:2.5rem 2rem; display:flex; flex-direction:column; box-shadow:var(--shadow-sm); transition:all 0.3s; text-align:left; position:relative; }
+.price-card:hover { transform:translateY(-8px); border-color:var(--card-hover-border); box-shadow:var(--shadow-lg); }
+.premium-card { border:2px solid var(--accent); background:linear-gradient(160deg,var(--card-bg) 0%,var(--bg) 100%); box-shadow:0 15px 40px var(--accent-glow); transform:scale(1.03); z-index:2; }
+.premium-card:hover { transform:scale(1.05) translateY(-8px); }
+.badge { position:absolute; top:-16px; left:50%; transform:translateX(-50%); background:var(--accent-gradient); color:#fff; font-size:0.8rem; font-weight:900; padding:6px 20px; border-radius:30px; letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; box-shadow:0 4px 15px var(--accent-glow); font-family:'Outfit',sans-serif; }
+.card-plan-tag { font-size:0.85rem; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--accent); margin-bottom:0.8rem; display:block; font-family:'Outfit',sans-serif; }
+.price-card h3 { font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:900; margin-bottom:0.5rem; letter-spacing:-0.5px; color:var(--dark); }
+.price-summary { color:var(--muted); font-size:1rem; margin-bottom:1.5rem; line-height:1.6; }
+.price-row { display:flex; align-items:baseline; gap:8px; margin-bottom:0.3rem; }
+.price-from { font-size:1.1rem; font-weight:700; color:var(--muted); }
+.price { font-family:'Outfit',sans-serif; font-size:3rem; font-weight:900; color:var(--dark); letter-spacing:-1.5px; line-height:1; }
+.price-period { color:var(--muted); font-size:0.95rem; margin-bottom:1.8rem; display:block; font-weight:600; }
+.divider { height:1px; background:var(--border-color); margin:1.5rem 0; }
+
+/* Discount banner */
+.discount-banner { background:var(--discount-bg); border:2px dashed var(--success); border-radius:16px; padding:18px; margin-bottom:1.8rem; text-align:center; transition:0.3s; }
+.discount-banner:hover { transform:scale(1.02); }
+.discount-banner strong { color:var(--discount-text); font-size:1.2rem; font-family:'Outfit',sans-serif; font-weight:900; display:block; margin-bottom:4px; }
+.discount-banner span { color:var(--dark); font-size:0.95rem; font-weight:500; }
+
+/* Server note */
+.server-note { background:var(--server-note-bg); border:1px solid var(--border-color); border-radius:14px; padding:1.2rem; margin-bottom:1.5rem; font-size:0.9rem; line-height:1.6; color:var(--muted); }
+.server-note strong { color:var(--dark); font-weight:800; }
+.server-note .tier { display:flex; align-items:flex-start; gap:10px; padding:6px 0; }
+.server-note .tier:first-child { border-bottom:1px solid var(--border-color); margin-bottom:6px; padding-bottom:12px; }
+.tier-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; margin-top:6px; }
+.tier-dot.yellow { background:var(--warning); }
+.tier-dot.green { background:var(--success); }
+
+/* Benefits toggle */
+.benefits-toggle { display:inline-flex; align-items:center; gap:8px; color:var(--accent); font-size:1rem; font-weight:800; cursor:pointer; padding:10px 0; border:none; background:none; transition:color 0.2s; margin-bottom:0.5rem; }
+.benefits-toggle:hover { color:var(--accent-hover); }
+.toggle-icon { transition:transform 0.3s; display:inline-block; font-style:normal; }
+.benefits-toggle.open .toggle-icon { transform:rotate(180deg); }
+.features-list { list-style:none; overflow:hidden; max-height:0; transition:max-height 0.4s ease-out,opacity 0.3s; opacity:0; margin-bottom:0; }
+.features-list.open,.features-list.always-open { max-height:800px; opacity:1; margin-bottom:1.5rem; }
+.features-list li { color:var(--muted); font-size:1.05rem; padding:10px 0; display:flex; align-items:flex-start; gap:12px; border-bottom:1px solid var(--border-color); }
+.features-list li:last-child { border-bottom:none; }
+.features-list li::before { content:"✓"; color:var(--accent); font-weight:900; margin-top:2px; flex-shrink:0; font-size:1.1rem; }
+.features-list b { color:var(--dark); font-weight:800; }
+
+/* Card actions */
+.card-actions { display:flex; flex-direction:column; gap:0.8rem; margin-top:auto; padding-top:1.5rem; }
+.btn-detail { display:flex; align-items:center; justify-content:center; gap:8px; padding:0.9rem; border-radius:12px; font-weight:800; font-size:1rem; cursor:pointer; border:1px solid var(--border-strong); background:var(--bg); color:var(--muted); transition:all 0.2s; }
+.btn-detail:hover { background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
+.btn-contract { display:flex; align-items:center; justify-content:center; gap:8px; padding:1rem; border-radius:12px; font-weight:800; font-size:1.1rem; transition:all 0.25s; background:var(--accent-gradient); color:#fff!important; box-shadow:0 4px 15px var(--accent-glow); }
+.btn-contract:hover { transform:translateY(-2px); box-shadow:0 8px 25px var(--accent-glow); filter:brightness(1.1); }
+.btn-outline { background:var(--card-bg); color:var(--accent)!important; border:2px solid var(--accent); box-shadow:none; }
+.btn-outline:hover { background:var(--accent); color:#fff!important; }
+
+/* Hidden plan sections */
+#plan-derechos,#plan-unico,#plan-codigos { display:none; opacity:0; }
+
+/* ========================
+   PÁGINA DE CÓDIGOS — INTRO CARD
+======================== */
+.codigos-intro {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 3rem;
     text-align: center;
-}
-
-.tab-container {
-    display: inline-flex;
-    gap: 6px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 8px;
-    margin-bottom: 4rem;
     box-shadow: var(--shadow-sm);
 }
-.tab-btn {
-    padding: 12px 28px; 
-    border: none;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 1rem; 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: var(--muted);
-    background: transparent;
-    letter-spacing: 0.5px;
-}
-.tab-btn.active {
-    background: var(--accent-gradient);
-    color: #ffffff;
-    box-shadow: 0 4px 15px var(--accent-glow);
-}
-.tab-btn:hover:not(.active) { background: var(--bg); color: var(--dark); }
-
-/* GRID DE PRECIOS */
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    align-items: stretch;
-    transition: opacity 0.4s ease;
-}
-
-.price-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 28px;
-    padding: 2.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s;
-    text-align: left;
-    position: relative;
-}
-.price-card:hover { transform: translateY(-8px); border-color: var(--card-hover-border); box-shadow: var(--shadow-lg); }
-
-/* TARJETA PREMIUM */
-.premium-card {
-    border: 2px solid var(--accent);
-    background: linear-gradient(160deg, var(--card-bg) 0%, var(--bg) 100%);
-    box-shadow: 0 15px 40px var(--accent-glow);
-    transform: scale(1.03);
-    z-index: 2;
-}
-.premium-card:hover { transform: scale(1.05) translateY(-8px); }
-
-.badge {
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent-gradient);
-    color: #ffffff;
-    font-size: 0.8rem; 
-    font-weight: 900;
-    padding: 6px 20px;
-    border-radius: 30px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    box-shadow: 0 4px 15px var(--accent-glow);
+.codigos-intro-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.codigos-intro-title {
     font-family: 'Outfit', sans-serif;
-}
-
-.card-plan-tag {
-    font-size: 0.85rem; 
+    font-size: 1.8rem;
     font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 0.8rem;
-    display: block;
-    font-family: 'Outfit', sans-serif;
-}
-.price-card h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.8rem; 
-    font-weight: 900;
-    margin-bottom: 0.5rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
     letter-spacing: -0.5px;
-    color: var(--dark);
 }
-.price-summary {
+.codigos-intro-desc {
     color: var(--muted);
-    font-size: 1rem; 
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 620px;
+    margin: 0 auto 1.8rem;
 }
-
-.price-row {
+.codigos-intro-desc strong { color: var(--dark); }
+.codigos-compat {
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 0.3rem;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
 }
-.price-from {
-    font-size: 1.1rem; 
-    font-weight: 700;
-    color: var(--muted);
-}
-.price {
-    font-family: 'Outfit', sans-serif;
-    font-size: 3rem; 
-    font-weight: 900;
-    color: var(--dark);
-    letter-spacing: -1.5px;
-    line-height: 1;
-}
-.price-period {
-    color: var(--muted);
-    font-size: 0.95rem; 
-    margin-bottom: 1.8rem;
-    display: block;
-    font-weight: 600;
-}
-.divider {
-    height: 1px;
-    background: var(--border-color);
-    margin: 1.5rem 0;
-}
-
-/* CAJA DE DESCUENTO */
-.discount-banner {
-    background: var(--discount-bg);
-    border: 2px dashed var(--success);
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 1.8rem;
-    text-align: center;
-    transition: 0.3s;
-}
-.discount-banner:hover { transform: scale(1.02); background: var(--success-light); }
-.discount-banner strong {
-    color: var(--discount-text);
-    font-size: 1.2rem;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 900;
-    display: block;
-    margin-bottom: 4px;
-}
-.discount-banner span { color: var(--dark); font-size: 0.95rem; font-weight: 500;}
-
-/* CAJA DE SERVIDOR */
-.server-note {
-    background: var(--server-note-bg); 
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 1.2rem; 
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem; 
-    line-height: 1.6;
-    color: var(--muted);
-}
-.server-note strong { color: var(--dark); font-weight: 800; }
-.server-note em { font-style: normal; text-decoration: underline; text-decoration-color: var(--warning); text-decoration-thickness: 2px;}
-.server-note .tier {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 6px 0;
-}
-.server-note .tier:first-child { border-bottom: 1px solid var(--border-color); margin-bottom: 6px; padding-bottom: 12px; }
-.tier-dot { width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:6px; }
-.tier-dot.yellow { background: var(--warning); }
-.tier-dot.green { background: var(--success); }
-
-/* LISTA DE BENEFICIOS */
-.benefits-toggle {
+.compat-chip {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    background: var(--accent-light);
     color: var(--accent);
-    font-size: 1rem; 
+    font-size: 0.92rem;
     font-weight: 800;
-    cursor: pointer;
-    padding: 10px 0;
-    border: none;
-    background: none;
-    transition: color 0.2s;
-    margin-bottom: 0.5rem;
-}
-.benefits-toggle:hover { color: var(--accent-hover); }
-.toggle-icon { transition: transform 0.3s; display: inline-block; font-style: normal; }
-.benefits-toggle.open .toggle-icon { transform: rotate(180deg); }
-
-.features-list {
-    list-style: none;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.4s ease-out, opacity 0.3s;
-    opacity: 0;
-    margin-bottom: 0;
-}
-.features-list.open, .features-list.always-open {
-    max-height: 800px; 
-    opacity: 1;
-    margin-bottom: 1.5rem;
-}
-.features-list li {
-    color: var(--muted);
-    font-size: 1.05rem; 
-    padding: 10px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    border-bottom: 1px solid var(--border-color);
-}
-.features-list li:last-child { border-bottom: none; }
-.features-list li::before { content:"✓"; color:var(--accent); font-weight:900; margin-top:2px; flex-shrink:0; font-size:1.1rem; }
-.features-list b { color: var(--dark); font-weight: 800; }
-
-/* ACCIONES DE TARJETA */
-.card-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem; 
-    margin-top: auto;
-    padding-top: 1.5rem;
-}
-.btn-detail {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 0.9rem;
-    border-radius: 12px;
-    font-weight: 800; font-size: 1rem; 
-    cursor: pointer;
-    border: 1px solid var(--border-strong);
-    background: var(--bg);
-    color: var(--muted);
+    padding: 9px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(37,99,235,0.2);
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.3px;
     transition: all 0.2s;
 }
-.btn-detail:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+.compat-chip:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
 
-.btn-contract {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 1rem; 
-    border-radius: 12px;
-    font-weight: 800; font-size: 1.1rem; 
-    transition: all 0.25s;
-    background: var(--accent-gradient);
-    color: #ffffff !important;
-    box-shadow: 0 4px 15px var(--accent-glow);
+/* Comparison hint below grid */
+.codigos-compare {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    background: var(--server-note-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.2rem 1.8rem;
+    text-align: left;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
 }
-.btn-contract:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--accent-glow); filter: brightness(1.1); }
-
-.btn-outline {
-    background: var(--card-bg);
-    color: var(--accent) !important;
-    border: 2px solid var(--accent); 
-    box-shadow: none;
-}
-.btn-outline:hover { background: var(--accent); color: #ffffff !important; }
-
-/* TARJETA UNICA (Derechos) */
-#plan-derechos { display: none; opacity: 0; }
-#plan-unico { display: none; opacity: 0; }
+.codigos-compare strong { color: var(--dark); }
 
 /* ========================
    MODAL
 ======================== */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--modal-overlay); 
-    backdrop-filter: blur(10px);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-}
-.modal-overlay.open { display: flex; animation: fadeInModal 0.25s ease forwards; }
+.modal-overlay { display:none; position:fixed; inset:0; background:var(--modal-overlay); backdrop-filter:blur(10px); z-index:9999; align-items:center; justify-content:center; padding:1.5rem; }
+.modal-overlay.open { display:flex; animation:fadeInModal 0.25s ease forwards; }
 @keyframes fadeInModal { from{opacity:0} to{opacity:1} }
-
-.modal-box {
-    background: var(--card-bg);
-    border-radius: 28px;
-    padding: 3rem; 
-    max-width: 650px;
-    width: 100%;
-    position: relative;
-    box-shadow: var(--shadow-lg);
-    animation: slideUpModal 0.3s cubic-bezier(0.16,1,0.3,1);
-    max-height: 90vh;
-    overflow-y: auto;
-}
+.modal-box { background:var(--card-bg); border-radius:28px; padding:3rem; max-width:650px; width:100%; position:relative; box-shadow:var(--shadow-lg); animation:slideUpModal 0.3s cubic-bezier(0.16,1,0.3,1); max-height:90vh; overflow-y:auto; }
 @keyframes slideUpModal { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
-
-/* Scrollbar Modal */
-.modal-box::-webkit-scrollbar { width: 8px; }
-.modal-box::-webkit-scrollbar-track { background: transparent; }
-.modal-box::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
-
-.modal-close {
-    position: absolute; top: 1.5rem; right: 1.5rem;
-    width: 40px; height: 40px; 
-    background: var(--bg); border: 1px solid var(--border-color);
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted);
-    transition: all 0.2s;
-}
-.modal-close:hover { background: var(--danger); color: #fff; border-color: var(--danger); transform: rotate(90deg); }
-
-.modal-badge {
-    display: inline-block;
-    background: var(--accent-light);
-    color: var(--accent);
-    font-size: 0.85rem; 
-    font-weight: 900;
-    padding: 6px 16px;
-    border-radius: 20px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    font-family: 'Outfit', sans-serif;
-}
-.modal-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2.2rem; 
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px;
-    color: var(--dark);
-}
-.modal-price-box {
-    background: var(--server-note-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.5rem 2rem;
-    margin: 1.5rem 0;
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-}
-.modal-price { font-family: 'Outfit', sans-serif; font-size: 2.8rem; font-weight: 900; color: var(--accent); }
-.modal-price-period { color: var(--muted); font-size: 1.1rem; font-weight: 600;}
-.modal-desc { color: var(--muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; }
-
-.modal-features-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.2rem; 
-    font-weight: 900;
-    margin-bottom: 1.2rem;
-    color: var(--dark);
-}
-.modal-features-list { list-style: none; margin-bottom: 2.5rem; }
-.modal-features-list li {
-    padding: 12px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 1.05rem; 
-    color: var(--muted);
-    line-height: 1.5;
-}
-.modal-features-list li:last-child { border-bottom: none; }
-.modal-features-list .ck { color: var(--accent); font-weight: 900; flex-shrink: 0; margin-top:2px; font-size: 1.2rem;}
-.modal-features-list b { color: var(--dark); font-weight: 800; }
-
-.modal-cta {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 1.2rem; 
-    border-radius: 14px;
-    font-weight: 800; font-size: 1.15rem;
-    background: var(--accent-gradient);
-    color: #ffffff !important;
-    box-shadow: 0 6px 25px var(--accent-glow);
-    width: 100%; text-align: center;
-    transition: all 0.3s;
-}
-.modal-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 35px var(--accent-glow); filter: brightness(1.1); }
+.modal-box::-webkit-scrollbar { width:8px; }
+.modal-box::-webkit-scrollbar-track { background:transparent; }
+.modal-box::-webkit-scrollbar-thumb { background:var(--border-strong); border-radius:10px; }
+.modal-close { position:absolute; top:1.5rem; right:1.5rem; width:40px; height:40px; background:var(--bg); border:1px solid var(--border-color); border-radius:50%; cursor:pointer; font-size:1.2rem; display:flex; align-items:center; justify-content:center; color:var(--muted); transition:all 0.2s; }
+.modal-close:hover { background:var(--danger); color:#fff; border-color:var(--danger); transform:rotate(90deg); }
+.modal-badge { display:inline-block; background:var(--accent-light); color:var(--accent); font-size:0.85rem; font-weight:900; padding:6px 16px; border-radius:20px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:1.5rem; font-family:'Outfit',sans-serif; }
+.modal-title { font-family:'Outfit',sans-serif; font-size:2.2rem; font-weight:900; margin-bottom:0.5rem; letter-spacing:-0.5px; color:var(--dark); }
+.modal-price-box { background:var(--server-note-bg); border:1px solid var(--border-color); border-radius:16px; padding:1.5rem 2rem; margin:1.5rem 0; display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+.modal-price { font-family:'Outfit',sans-serif; font-size:2.8rem; font-weight:900; color:var(--accent); }
+.modal-price-period { color:var(--muted); font-size:1.1rem; font-weight:600; }
+.modal-desc { color:var(--muted); font-size:1.1rem; line-height:1.7; margin-bottom:2rem; }
+.modal-features-title { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:900; margin-bottom:1.2rem; color:var(--dark); }
+.modal-features-list { list-style:none; margin-bottom:2.5rem; }
+.modal-features-list li { padding:12px 0; display:flex; align-items:flex-start; gap:12px; border-bottom:1px solid var(--border-color); font-size:1.05rem; color:var(--muted); line-height:1.5; }
+.modal-features-list li:last-child { border-bottom:none; }
+.modal-features-list .ck { color:var(--accent); font-weight:900; flex-shrink:0; margin-top:2px; font-size:1.2rem; }
+.modal-features-list b { color:var(--dark); font-weight:800; }
+.modal-cta { display:flex; align-items:center; justify-content:center; gap:8px; padding:1.2rem; border-radius:14px; font-weight:800; font-size:1.15rem; background:var(--accent-gradient); color:#fff!important; box-shadow:0 6px 25px var(--accent-glow); width:100%; text-align:center; transition:all 0.3s; }
+.modal-cta:hover { transform:translateY(-3px); box-shadow:0 10px 35px var(--accent-glow); filter:brightness(1.1); }
 
 /* ========================
    FOOTER
 ======================== */
-footer {
-    background: #0b1120; /* Siempre oscuro */
-    padding: 5rem 5%;
-    text-align: center;
-    color: #64748b;
+footer { background:#0b1120; padding:5rem 5%; text-align:center; color:#64748b; }
+.footer-logo { font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:900; color:#fff; margin-bottom:0.8rem; display:block; letter-spacing:-0.5px; }
+.footer-logo em { font-style:normal; color:#3b82f6; }
+.footer-tagline { font-size:1.1rem; margin-bottom:2rem; color:#94a3b8; }
+.footer-links { display:flex; gap:2.5rem; justify-content:center; margin-bottom:2.5rem; flex-wrap:wrap; }
+.footer-links a { color:#94a3b8; font-size:1rem; font-weight:600; transition:color 0.2s; }
+.footer-links a:hover { color:#3b82f6; }
+.footer-divider { height:1px; background:rgba(255,255,255,0.1); margin-bottom:2rem; max-width:800px; margin-inline:auto; }
+.footer-copy { font-size:0.95rem; color:#475569; }
+.footer-copy strong { color:#94a3b8; font-weight:700; }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(40px); transition:all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:0.1s; }
+.reveal-delay-2 { transition-delay:0.2s; }
+.reveal-delay-3 { transition-delay:0.3s; }
+
+/* RESPONSIVE */
+@media(max-width:992px) {
+    .pricing-grid { grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+    .premium-card { transform:scale(1); z-index:1; }
+    .premium-card:hover { transform:translateY(-8px); }
+    .carousel-track-outer { height:350px; }
 }
-.footer-logo {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.6rem; 
-    font-weight: 900;
-    color: #ffffff;
-    margin-bottom: 0.8rem;
-    display: block;
-    letter-spacing: -0.5px;
+@media(max-width:768px) {
+    html { font-size:16px; }
+    .navbar { padding:0 20px; }
+    .nav-links .btn-nav:not(.theme-toggle) { display:none; }
+    .hero h1 { font-size:2.8rem; letter-spacing:-0.5px; }
+    .hero-btns { flex-direction:column; width:100%; max-width:320px; margin:0 auto 3rem; }
+    .btn-primary,.btn-secondary { width:100%; justify-content:center; }
+    .carousel-track-outer { height:280px; }
+    .tab-container { flex-direction:column; width:100%; max-width:320px; background:transparent; box-shadow:none; border:none; gap:10px; margin-bottom:2rem; }
+    .tab-btn { background:var(--card-bg); border:1px solid var(--border-color); box-shadow:var(--shadow-sm); }
+    .tab-btn.codigos-tab::after { top:-8px; }
+    .codigos-intro { padding:2rem 1.5rem; }
+    .modal-box { padding:2rem 1.5rem; border-radius:20px; }
+    .modal-title { font-size:1.8rem; }
+    .modal-price { font-size:2.2rem; }
 }
-.footer-logo em { font-style:normal; color: #3b82f6; } 
-.footer-tagline { font-size: 1.1rem; margin-bottom: 2rem; color: #94a3b8; }
-
-.footer-links { display:flex; gap:2.5rem; justify-content:center; margin-bottom:2.5rem; flex-wrap: wrap; }
-.footer-links a { color: #94a3b8; font-size: 1rem; font-weight: 600; transition: color 0.2s; }
-.footer-links a:hover { color: #3b82f6; }
-
-.footer-divider { height:1px; background:rgba(255,255,255,0.1); margin-bottom:2rem; max-width: 800px; margin-inline: auto;}
-.footer-copy { font-size: 0.95rem; color: #475569; }
-.footer-copy strong { color: #94a3b8; font-weight: 700; }
-
-/* ========================
-   ANIMACIONES JS
-======================== */
-.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
-.reveal.active { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-/* ========================
-   RESPONSIVE
-======================== */
-@media(max-width: 992px) {
-    .pricing-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-    .premium-card { transform: scale(1); z-index: 1; }
-    .premium-card:hover { transform: translateY(-8px); }
-    .hero h1 { font-size: 3.5rem; }
-    .carousel-track-outer { height: 350px; }
-}
-
-@media(max-width: 768px) {
-    html { font-size: 16px; } 
-    .navbar { padding: 0 20px; }
-    .nav-links .btn-nav:not(.theme-toggle) { display:none; } 
-    .hero { padding-top: 110px; }
-    .hero h1 { font-size: 2.8rem; letter-spacing: -0.5px; }
-    .hero-btns { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto 3rem auto; }
-    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
-    .carousel-track-outer { height: 280px; }
-    .carousel-arrow { width: 40px; height: 40px; font-size: 1.2rem; }
-    .tab-container { flex-direction: column; width: 100%; max-width: 320px; background: transparent; box-shadow: none; border: none; gap: 10px; margin-bottom: 2rem;}
-    .tab-btn { background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
-    .modal-box { padding: 2rem 1.5rem; border-radius: 20px; }
-    .modal-title { font-size: 1.8rem; }
-    .modal-price { font-size: 2.2rem; }
-    .modal-close { top: 1rem; right: 1rem; width: 35px; height: 35px; }
-}</style>
+</style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <header class="navbar" id="navbar">
     <div class="logo">Stream<em>Manager</em></div>
     <nav class="nav-links">
@@ -1076,6 +417,7 @@ footer {
     </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero reveal">
     <div class="hero-bg"></div>
     <div class="hero-badge"><span class="dot"></span> Sistema activo</div>
@@ -1087,477 +429,393 @@ footer {
     </div>
 </section>
 
+<!-- SLIDER PORTAFOLIO -->
 <section class="sales-container reveal" id="portafolio">
     <header class="promo-header">
         <h2>CREA TU PROPIA <span>PÁGINA WEB</span></h2>
         <p>Cotiza hoy mismo y obtén una plataforma profesional idéntica a esta, lista para automatizar tus ventas de streaming 24/7.</p>
     </header>
-
     <div class="demo-slider">
         <div class="demo-track">
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=123B5J7DJods48hMQ6JkA3_BsZJ31aOAB&sz=w800" alt="Vista 1">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">🖥️ Interfaz de Tienda Premium</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=15I8ssrTCw8VoacZIF9OA23QIjyRXxIQQ&sz=w800" alt="Vista 2">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">💳 Sistema de Billetera Integrado</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=1EBo5sjbdy90dDsqbYzFxMFmiqC4PSrpq&sz=w800" alt="Vista 3">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">⚙️ Panel de Control Maestro</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=1KlDFhTss7UkA0nyksEsGyzoX-sEFbFLV&sz=w800" alt="Vista 4">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">📱 Diseño 100% Responsivo</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=1iXn-Epqpv5GL2ZHr2jFg8uI9oobO4mc_&sz=w800" alt="Vista 5">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">⚡ Automatización Total</div>
-                </div>
-            </div>
-
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=123B5J7DJods48hMQ6JkA3_BsZJ31aOAB&sz=w800" alt="Vista 1">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">🖥️ Interfaz de Tienda Premium</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=15I8ssrTCw8VoacZIF9OA23QIjyRXxIQQ&sz=w800" alt="Vista 2">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">💳 Sistema de Billetera Integrado</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=1EBo5sjbdy90dDsqbYzFxMFmiqC4PSrpq&sz=w800" alt="Vista 3">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">⚙️ Panel de Control Maestro</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=1KlDFhTss7UkA0nyksEsGyzoX-sEFbFLV&sz=w800" alt="Vista 4">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">📱 Diseño 100% Responsivo</div>
-                </div>
-            </div>
-            <div class="demo-card">
-                <img src="https://drive.google.com/thumbnail?id=1iXn-Epqpv5GL2ZHr2jFg8uI9oobO4mc_&sz=w800" alt="Vista 5">
-                <div class="demo-card-info">
-                    <div class="demo-card-title">⚡ Automatización Total</div>
-                </div>
-            </div>
+            <!-- Originales -->
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=123B5J7DJods48hMQ6JkA3_BsZJ31aOAB&sz=w800" alt="Vista 1"><div class="demo-card-info"><div class="demo-card-title">🖥️ Interfaz de Tienda Premium</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=15I8ssrTCw8VoacZIF9OA23QIjyRXxIQQ&sz=w800" alt="Vista 2"><div class="demo-card-info"><div class="demo-card-title">💳 Sistema de Billetera Integrado</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=1EBo5sjbdy90dDsqbYzFxMFmiqC4PSrpq&sz=w800" alt="Vista 3"><div class="demo-card-info"><div class="demo-card-title">⚙️ Panel de Control Maestro</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=1KlDFhTss7UkA0nyksEsGyzoX-sEFbFLV&sz=w800" alt="Vista 4"><div class="demo-card-info"><div class="demo-card-title">📱 Diseño 100% Responsivo</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=1iXn-Epqpv5GL2ZHr2jFg8uI9oobO4mc_&sz=w800" alt="Vista 5"><div class="demo-card-info"><div class="demo-card-title">⚡ Automatización Total</div></div></div>
+            <!-- Duplicados para loop infinito -->
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=123B5J7DJods48hMQ6JkA3_BsZJ31aOAB&sz=w800" alt="Vista 1"><div class="demo-card-info"><div class="demo-card-title">🖥️ Interfaz de Tienda Premium</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=15I8ssrTCw8VoacZIF9OA23QIjyRXxIQQ&sz=w800" alt="Vista 2"><div class="demo-card-info"><div class="demo-card-title">💳 Sistema de Billetera Integrado</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=1EBo5sjbdy90dDsqbYzFxMFmiqC4PSrpq&sz=w800" alt="Vista 3"><div class="demo-card-info"><div class="demo-card-title">⚙️ Panel de Control Maestro</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=1KlDFhTss7UkA0nyksEsGyzoX-sEFbFLV&sz=w800" alt="Vista 4"><div class="demo-card-info"><div class="demo-card-title">📱 Diseño 100% Responsivo</div></div></div>
+            <div class="demo-card"><img src="https://drive.google.com/thumbnail?id=1iXn-Epqpv5GL2ZHr2jFg8uI9oobO4mc_&sz=w800" alt="Vista 5"><div class="demo-card-info"><div class="demo-card-title">⚡ Automatización Total</div></div></div>
         </div>
     </div>
+    <div><a href="https://wa.me/573016149753?text=Hola,%20quiero%20cotizar%20la%20creación%20de%20mi%20propia%20página." target="_blank" class="cta-button">💬 COTIZAR MI PÁGINA AHORA</a></div>
+</section>
 
-    <div>
-        <a href="https://wa.me/573016149753?text=Hola,%20quiero%20cotizar%20la%20creación%20de%20mi%20propia%20página." target="_blank" class="cta-button">
-            💬 COTIZAR MI PÁGINA AHORA
-        </a>
+<!-- FEATURES -->
+<section class="features-section reveal" id="funciones">
+    <div class="section-header">
+        <div class="section-label">¿Por qué elegirnos?</div>
+        <h2 class="section-title">Todo lo que necesita<br>tu negocio</h2>
+        <p class="section-sub">Desde el inventario y cobro automático, hasta el análisis de tus ventas con propuestas y recomendaciones estratégicas para escalar tu operación.</p>
+    </div>
+    <div class="feature-grid">
+        <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">🏪</div><h3>Tienda Premium</h3><p>Catálogo visual con precios, disponibilidad en tiempo real y carrito de compras integrado para tus clientes.</p></div>
+        <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">💳</div><h3>Billetera Digital</h3><p>Saldo, historial de movimientos, recargas y descuentos administrados en un solo panel limpio.</p></div>
+        <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">🔑</div><h3>Portal de Credenciales</h3><p>Tus clientes verifican sus accesos directamente. Disney+, Netflix, HBO+ y más desde un portal seguro.</p></div>
+        <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">📊</div><h3>Historial & Reportes</h3><p>Exporta en TXT o CSV, filtra por fecha y servicio. Control total de pedidos sin esfuerzo.</p></div>
+        <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">⚡</div><h3>Recargas Automáticas</h3><p>Integración con Bancolombia para recibir y acreditar pagos automáticamente, sin intervención manual.</p></div>
+        <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">🎫</div><h3>Lector de Códigos</h3><p>Valida y procesa códigos de servicios streaming con precisión y velocidad. Sin errores humanos.</p></div>
+        <div class="feature-card reveal reveal-delay-3"><div class="feature-icon">🤖</div><h3>Análisis Inteligente</h3><p>Análisis en tiempo real con recomendaciones y propuestas generadas por nuestro bot para mejorar tus ventas.</p></div>
+        <div class="feature-card reveal reveal-delay-3"><div class="feature-icon">🎧</div><h3>Gestión de Tickets</h3><p>Administración y soporte de tickets directamente desde la página para atender a tus usuarios rápidamente.</p></div>
+        <div class="feature-card reveal reveal-delay-3"><div class="feature-icon">🔄</div><h3>Garantía y Renovación</h3><p>Gestión automatizada de garantías o renovación de servicios para mantener el ciclo de vida de tus clientes.</p></div>
     </div>
 </section>
 
-<div id="main-landing-content">
-    <section class="features-section reveal" id="funciones">
-        <div class="section-header">
-            <div class="section-label">¿Por qué elegirnos?</div>
-            <h2 class="section-title">Todo lo que necesita<br>tu negocio</h2>
-            <p class="section-sub">Desde el inventario y cobro automático, hasta el análisis de tus ventas con propuestas y recomendaciones estratégicas para escalar tu operación.</p>
+<!-- PRICING -->
+<section class="pricing-section reveal" id="planes">
+    <div class="section-header" style="max-width:980px;margin:0 auto 0.5rem;">
+        <div class="section-label">Planes y Precios</div>
+        <h2 class="section-title">Elige tu modalidad</h2>
+        <p class="section-sub">Mensualidad flexible, compra única o adquiere los derechos totales. También puedes contratar solo la Página de Códigos.</p>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin-bottom:3rem;margin-top:2rem;">
+        <div class="tab-container">
+            <button class="tab-btn active" data-target="plan-mensual">📅 Mensualidad</button>
+            <button class="tab-btn" data-target="plan-unico">💼 Pago Único</button>
+            <button class="tab-btn" data-target="plan-derechos">⚖️ Derechos Totales</button>
+            <button class="tab-btn codigos-tab" data-target="plan-codigos">🔑 Pág. Códigos</button>
         </div>
-        <div class="feature-grid">
-            <div class="feature-card reveal reveal-delay-1">
-                <div class="feature-icon">🏪</div>
-                <h3>Tienda Premium</h3>
-                <p>Catálogo visual con precios, disponibilidad en tiempo real y carrito de compras integrado para tus clientes.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         MENSUALIDAD
+    ═══════════════════════════════════════ -->
+    <div id="plan-mensual" class="pricing-grid" style="display:grid;opacity:1;">
+        <!-- Básico -->
+        <div class="price-card">
+            <span class="card-plan-tag">Mensualidad</span>
+            <h3>Básico</h3>
+            <p class="price-summary">Ideal para empezar de forma organizada. Lleva el control total de tu catálogo sin complicaciones.</p>
+            <div class="price-row"><span class="price-from">Desde </span><div class="price">$100.000</div></div>
+            <span class="price-period">COP / mes</span>
+            <div class="server-note">
+                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div></div>
+                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
             </div>
-            <div class="feature-card reveal reveal-delay-1">
-                <div class="feature-icon">💳</div>
-                <h3>Billetera Digital</h3>
-                <p>Saldo, historial de movimientos, recargas y descuentos administrados en un solo panel limpio.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-1">
-                <div class="feature-icon">🔑</div>
-                <h3>Portal de Credenciales</h3>
-                <p>Tus clientes verifican sus accesos directamente. Disney+, Netflix, HBO+ y más desde un portal seguro.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-2">
-                <div class="feature-icon">📊</div>
-                <h3>Historial & Reportes</h3>
-                <p>Exporta en TXT o CSV, filtra por fecha y servicio. Control total de pedidos sin esfuerzo.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-2">
-                <div class="feature-icon">⚡</div>
-                <h3>Recargas Automáticas</h3>
-                <p>Integración con Bancolombia para recibir y acreditar pagos automáticamente, sin intervención manual.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-2">
-                <div class="feature-icon">🎫</div>
-                <h3>Lector de Códigos</h3>
-                <p>Valida y procesa códigos de servicios streaming con precisión y velocidad. Sin errores humanos.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-3">
-                <div class="feature-icon">🤖</div>
-                <h3>Análisis Inteligente</h3>
-                <p>Análisis en tiempo real con recomendaciones y propuestas generadas por nuestro bot para mejorar tus ventas.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-3">
-                <div class="feature-icon">🎧</div>
-                <h3>Gestión de Tickets</h3>
-                <p>Administración y soporte de tickets directamente desde la página para atender a tus usuarios rápidamente.</p>
-            </div>
-            <div class="feature-card reveal reveal-delay-3">
-                <div class="feature-icon">🔄</div>
-                <h3>Garantía y Renovación</h3>
-                <p>Gestión automatizada de garantías o renovación de servicios para mantener el ciclo de vida de tus clientes.</p>
+            <div class="divider"></div>
+            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+            <ul class="features-list">
+                <li>Inventario de cuentas centralizado</li>
+                <li>Control detallado de ventas y usuarios</li>
+                <li>Hosting incluido en la mensualidad</li>
+                <li>Panel de administración intuitivo</li>
+                <li>Soporte técnico personalizado</li>
+            </ul>
+            <div class="card-actions">
+                <button class="btn-detail" onclick="openModal('basico')">📄 Ver explicación detallada</button>
+                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Básico" target="_blank" class="btn-contract btn-outline">Contratar Básico</a>
             </div>
         </div>
-    </section>
-
-    <section class="pricing-section reveal" id="planes">
-        <div class="section-header" style="max-width:980px;margin:0 auto 0.5rem;">
-            <div class="section-label">Planes y Precios</div>
-            <h2 class="section-title">Elige tu modalidad</h2>
-            <p class="section-sub">Mensualidad flexible, compra única o adquiere los derechos totales del sistema para máxima libertad.</p>
+        <!-- Estándar -->
+        <div class="price-card premium-card">
+            <div class="badge">MÁS POPULAR</div>
+            <span class="card-plan-tag">Mensualidad</span>
+            <h3>Estándar</h3>
+            <p class="price-summary">Automatiza una parte crucial de tu operación y ahorra tiempo atendiendo con mucha más velocidad.</p>
+            <div class="price-row"><span class="price-from">Desde </span><div class="price">$150.000</div></div>
+            <span class="price-period">COP / mes</span>
+            <div class="server-note">
+                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div></div>
+                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+            </div>
+            <div class="divider"></div>
+            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+            <ul class="features-list">
+                <li>Todo lo del plan Básico</li>
+                <li><b>Lectura de códigos de servicios</b></li>
+                <li><b>Recargas automáticas (Bancolombia)</b></li>
+                <li>Elige UN módulo al contratar</li>
+                <li><b>Incluye una implementación inicial</b></li>
+            </ul>
+            <div class="card-actions">
+                <button class="btn-detail" onclick="openModal('estandar')">📄 Ver explicación detallada</button>
+                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Estándar" target="_blank" class="btn-contract">Contratar Estándar</a>
+            </div>
         </div>
+        <!-- Premium -->
+        <div class="price-card">
+            <span class="card-plan-tag">Mensualidad</span>
+            <h3>Premium</h3>
+            <p class="price-summary">Automatización total, cero dolores de cabeza. Tu negocio en piloto automático con todas las funciones activas.</p>
+            <div class="price-row"><span class="price-from">Desde </span><div class="price">$200.000</div></div>
+            <span class="price-period">COP / mes</span>
+            <div class="server-note">
+                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div></div>
+                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+            </div>
+            <div class="divider"></div>
+            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+            <ul class="features-list">
+                <li>Todo lo del plan Estándar</li>
+                <li><b>Lectura de códigos activa</b></li>
+                <li><b>Recargas automáticas activas</b></li>
+                <li>Ambos módulos simultáneos</li>
+                <li>Soporte prioritario personalizado</li>
+                <li><b>Incluye dos implementaciones</b></li>
+            </ul>
+            <div class="card-actions">
+                <button class="btn-detail" onclick="openModal('premium')">📄 Ver explicación detallada</button>
+                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Premium" target="_blank" class="btn-contract btn-outline">Contratar Premium</a>
+            </div>
+        </div>
+    </div>
 
-        <div style="display:flex;justify-content:center;margin-bottom:3rem;margin-top:2rem;">
-            <div class="tab-container">
-                <button class="tab-btn active" data-target="plan-mensual">📅 Mensualidad</button>
-                <button class="tab-btn" data-target="plan-unico">💼 Pago Único</button>
-                <button class="tab-btn" data-target="plan-derechos">⚖️ Derechos Totales</button>
+    <!-- ═══════════════════════════════════════
+         PAGO ÚNICO
+    ═══════════════════════════════════════ -->
+    <div id="plan-unico" style="display:none;opacity:0;">
+        <div class="global-discount-banner">
+            <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
+            <p>Durante el mes de abril, cada página tendrá un 20% de descuento automático. ¡Aprovecha ahora!</p>
+            <div class="timer-container">
+                <div class="timer-box"><span class="timer-number days">00</span><span class="timer-label">Días</span></div>
+                <div class="timer-box"><span class="timer-number hours">00</span><span class="timer-label">Horas</span></div>
+                <div class="timer-box"><span class="timer-number minutes">00</span><span class="timer-label">Min</span></div>
+                <div class="timer-box"><span class="timer-number seconds">00</span><span class="timer-label">Seg</span></div>
+            </div>
+        </div>
+        <div class="pricing-grid">
+            <!-- Básico -->
+            <div class="price-card">
+                <span class="card-plan-tag">Pago Único</span>
+                <h3>Sistema Básico</h3>
+                <p class="price-summary">Lo esencial instalado de forma permanente. La base perfecta para gestionar tu catálogo sin cobros mensuales.</p>
+                <div class="price-row"><span class="price-from">Precio </span><div class="price" style="display:flex;flex-direction:column;line-height:1;"><span style="font-size:1.1rem;text-decoration:line-through;color:var(--muted);font-weight:600;margin-bottom:4px;">$1.200.000</span>$960.000</div></div>
+                <span class="price-period">COP — pago único</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list"><li>Tienda e inventario visual</li><li>Control avanzado de ventas</li><li>Hosting con tu propio nombre (GitHub)</li><li>Libertad para instalar el frontend en tu Hosting</li><li><b>Incluye una implementación</b></li></ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('unico-basico')">📄 Ver detalles</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Básico%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract btn-outline">Comprar Sistema</a>
+                </div>
+            </div>
+            <!-- Premium -->
+            <div class="price-card premium-card">
+                <div class="badge">TODO INCLUIDO</div>
+                <span class="card-plan-tag">Pago Único</span>
+                <h3>Sistema Premium</h3>
+                <p class="price-summary">Las dos integraciones activas de por vida. El ecosistema completo para maximizar ganancias sin depender de nadie.</p>
+                <div class="price-row"><span class="price-from">Precio </span><div class="price" style="display:flex;flex-direction:column;line-height:1;"><span style="font-size:1.1rem;text-decoration:line-through;color:var(--muted);font-weight:600;margin-bottom:4px;">$2.200.000</span>$1.760.000</div></div>
+                <span class="price-period">COP — pago único</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list"><li>Sistema Básico completo</li><li><b>Lectura de Códigos</b></li><li><b>Recargas Automáticas</b></li><li>Hosting con tu propio nombre (GitHub)</li><li>Libertad para instalar el frontend en tu Hosting</li><li>Automatización total asegurada</li></ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('unico-premium')">📄 Ver detalles</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Premium%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar Premium</a>
+                </div>
+            </div>
+            <!-- Intermedio -->
+            <div class="price-card">
+                <span class="card-plan-tag">Pago Único</span>
+                <h3>Intermedio</h3>
+                <p class="price-summary">Con una integración a tu elección para empezar a automatizar entregas o pagos sin ataduras mensuales.</p>
+                <div class="price-row"><span class="price-from">Precio </span><div class="price" style="display:flex;flex-direction:column;line-height:1;"><span style="font-size:1.1rem;text-decoration:line-through;color:var(--muted);font-weight:600;margin-bottom:4px;">$1.700.000</span>$1.360.000</div></div>
+                <span class="price-period">COP — pago único</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list"><li>Sistema Básico completo</li><li>Elige <b>UNA</b> integración:</li><li>Lectura de Códigos o Recargas</li><li>Hosting con tu propio nombre (GitHub)</li><li>Libertad para instalar el frontend en tu Hosting</li><li><b>Incluye una implementación</b></li></ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('unico-inter')">📄 Ver detalles</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Intermedio%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract btn-outline">Comprar Intermedio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         DERECHOS TOTALES
+    ═══════════════════════════════════════ -->
+    <div id="plan-derechos" style="display:none;opacity:0;max-width:540px;margin:0 auto;">
+        <div class="global-discount-banner">
+            <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
+            <p>Durante el mes de abril, cada página tendrá un 20% de descuento automático. ¡Aprovecha ahora!</p>
+            <div class="timer-container">
+                <div class="timer-box"><span class="timer-number days">00</span><span class="timer-label">Días</span></div>
+                <div class="timer-box"><span class="timer-number hours">00</span><span class="timer-label">Horas</span></div>
+                <div class="timer-box"><span class="timer-number minutes">00</span><span class="timer-label">Min</span></div>
+                <div class="timer-box"><span class="timer-number seconds">00</span><span class="timer-label">Seg</span></div>
+            </div>
+        </div>
+        <div class="price-card premium-card" style="text-align:center;">
+            <div class="badge">PROPIEDAD ABSOLUTA</div>
+            <span class="card-plan-tag" style="display:block;">Licencia Completa</span>
+            <h3>Código Fuente & Derechos</h3>
+            <p class="price-summary">Crea tu propio SaaS sin ningún límite. Modifica y escala la plataforma bajo tus propias reglas e imagen corporativa.</p>
+            <div class="price-row" style="justify-content:center;"><span class="price-from">Precio </span><div class="price" style="display:flex;flex-direction:column;line-height:1;"><span style="font-size:1.2rem;text-decoration:line-through;color:var(--muted);font-weight:600;margin-bottom:4px;">$3.500.000</span>$2.800.000</div></div>
+            <span class="price-period">COP — pago único</span>
+            <div style="background:rgba(16,185,129,0.1);border:1px dashed #10b981;border-radius:12px;padding:15px;margin:20px 0;text-align:center;">
+                <span style="font-size:1.5rem;display:block;margin-bottom:5px;">🎁</span>
+                <strong style="color:#10b981;font-size:1.15rem;display:block;margin-bottom:5px;">¡-$500.000 COP de Descuento!</strong>
+                <span style="color:var(--muted);font-size:0.9rem;display:block;line-height:1.4;">Se aplica si proporcionas e instalamos el sistema directamente en <b>tu propio hosting</b>.</span>
+            </div>
+            <div class="server-note">
+                <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div></div>
+                <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+            </div>
+            <div class="divider"></div>
+            <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+            <ul class="features-list" style="text-align:left;">
+                <li>Entrega total del código fuente</li>
+                <li>Libertad para modificar el sistema</li>
+                <li>Derechos comerciales para revender</li>
+                <li>Crea tu propio negocio SaaS sin límites</li>
+                <li>Hosting con tu propio nombre (GitHub)</li>
+                <li>Libertad para instalar frontend y backend en tu Hosting</li>
+                <li><b>Incluye guía técnica de despliegue</b></li>
+            </ul>
+            <div class="card-actions">
+                <button class="btn-detail" onclick="openModal('derechos')">📄 Ver detalles completos</button>
+                <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Código%20Fuente%20y%20Derechos%20Completos%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar Derechos Totales</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         🔑 PÁGINA DE CÓDIGOS — NUEVO
+    ═══════════════════════════════════════ -->
+    <div id="plan-codigos" style="display:none;opacity:0;">
+
+        <!-- Tarjeta explicativa -->
+        <div class="codigos-intro">
+            <div class="codigos-intro-icon">🔑</div>
+            <h3 class="codigos-intro-title">¿Qué es la Página de Códigos?</h3>
+            <p class="codigos-intro-desc">
+                Una plataforma <strong>independiente y dedicada</strong> donde tus clientes pueden verificar sus credenciales
+                de acceso (correo original del proveedor + contraseña de servicio) de forma segura, sin necesidad de contactarte.
+                No requiere el sistema completo — es un producto por separado.
+            </p>
+            <div class="codigos-compat">
+                <span class="compat-chip">📧 Gmail</span>
+                <span class="compat-chip">📨 Outlook</span>
+                <span class="compat-chip">🌐 Dominio Propio</span>
             </div>
         </div>
 
-        <div id="plan-mensual" class="pricing-grid">
+        <!-- Grid de 3 tarjetas -->
+        <div class="pricing-grid">
 
+            <!-- Mensual -->
             <div class="price-card">
                 <span class="card-plan-tag">Mensualidad</span>
-                <h3>Básico</h3>
-                <p class="price-summary">Ideal para empezar de forma organizada. Lleva el control total de tu catálogo sin complicaciones ni enredos técnicos.</p>
+                <h3>Códigos Mensual</h3>
+                <p class="price-summary">Ideal para probarla antes de comprarla de por vida. Renueva mes a mes sin compromisos de largo plazo.</p>
                 <div class="price-row"><span class="price-from">Desde </span><div class="price">$100.000</div></div>
                 <span class="price-period">COP / mes</span>
-
                 <div class="server-note">
-                    <div class="tier">
-                        <span class="tier-dot yellow"></span>
-                        <div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div>
-                    </div>
-                    <div class="tier">
-                        <span class="tier-dot green"></span>
-                        <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                    </div>
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
                 </div>
-
                 <div class="divider"></div>
-                <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                    Ver beneficios <em class="toggle-icon">▾</em>
-                </button>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
                 <ul class="features-list">
-                    <li>Inventario de cuentas centralizado</li>
-                    <li>Control detallado de ventas y usuarios</li>
+                    <li>Portal de verificación de credenciales</li>
+                    <li>Compatible con <b>Gmail</b>, <b>Outlook</b> o dominio propio</li>
+                    <li>Acceso protegido por contraseña de servicio</li>
+                    <li>Diseño limpio adaptado a tu marca</li>
                     <li>Hosting incluido en la mensualidad</li>
-                    <li>Panel de administración intuitivo</li>
                     <li>Soporte técnico personalizado</li>
                 </ul>
                 <div class="card-actions">
-                    <button class="btn-detail" onclick="openModal('basico')">📄 Ver explicación detallada</button>
-                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Básico" target="_blank" class="btn-contract btn-outline">Contratar Básico</a>
+                    <button class="btn-detail" onclick="openModal('codigos-mensual')">📄 Ver explicación detallada</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20la%20Página%20de%20Códigos%20mensual" target="_blank" class="btn-contract btn-outline">Contratar Mensual</a>
                 </div>
             </div>
 
+            <!-- De por vida (POPULAR) -->
             <div class="price-card premium-card">
-                <div class="badge">MÁS POPULAR</div>
-                <span class="card-plan-tag">Mensualidad</span>
-                <h3>Estándar</h3>
-                <p class="price-summary">Automatiza una parte crucial de tu operación y ahorra tiempo valioso atendiendo a tus clientes con mucha más velocidad.</p>
-                <div class="price-row"><span class="price-from">Desde </span><div class="price">$150.000</div></div>
-                <span class="price-period">COP / mes</span>
-
-                <div class="server-note">
-                    <div class="tier">
-                        <span class="tier-dot yellow"></span>
-                        <div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div>
-                    </div>
-                    <div class="tier">
-                        <span class="tier-dot green"></span>
-                        <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                    </div>
-                </div>
-
-                <div class="divider"></div>
-                <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                    Ver beneficios <em class="toggle-icon">▾</em>
-                </button>
-                <ul class="features-list">
-                    <li>Todo lo del plan Básico</li>
-                    <li><b>Lectura de códigos de servicios</b></li>
-                    <li><b>Recargas automáticas (Bancolombia)</b></li>
-                    <li>Elige UN módulo al contratar</li>
-                    <li><b>Incluye una implementación inicial</b></li>
-                </ul>
-                <div class="card-actions">
-                    <button class="btn-detail" onclick="openModal('estandar')">📄 Ver explicación detallada</button>
-                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Estándar" target="_blank" class="btn-contract">Contratar Estándar</a>
-                </div>
-            </div>
-
-            <div class="price-card">
-                <span class="card-plan-tag">Mensualidad</span>
-                <h3>Premium</h3>
-                <p class="price-summary">Automatización total, cero dolores de cabeza. Tu negocio trabajando en piloto automático para ti con todas las funciones activas.</p>
-                <div class="price-row"><span class="price-from">Desde </span><div class="price">$200.000</div></div>
-                <span class="price-period">COP / mes</span>
-
-                <div class="server-note">
-                    <div class="tier">
-                        <span class="tier-dot yellow"></span>
-                        <div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div>
-                    </div>
-                    <div class="tier">
-                        <span class="tier-dot green"></span>
-                        <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                    </div>
-                </div>
-
-                <div class="divider"></div>
-                <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                    Ver beneficios <em class="toggle-icon">▾</em>
-                </button>
-                <ul class="features-list">
-                    <li>Todo lo del plan Estándar</li>
-                    <li><b>Lectura de códigos activa</b></li>
-                    <li><b>Recargas automáticas activas</b></li>
-                    <li>Ambos módulos simultáneos</li>
-                    <li>Soporte prioritario personalizado</li>
-                    <li><b>Incluye dos implementaciones</b></li>
-                </ul>
-                <div class="card-actions">
-                    <button class="btn-detail" onclick="openModal('premium')">📄 Ver explicación detallada</button>
-                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Premium" target="_blank" class="btn-contract btn-outline">Contratar Premium</a>
-                </div>
-            </div>
-        </div>
-
-        <div id="plan-unico" style="display:none;opacity:0;">
-            <div class="global-discount-banner">
-                <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
-                <p>Durante el mes de abril, cada página tendrá un 20% de descuento automático. ¡Aprovecha ahora!</p>
-                <div class="timer-container">
-                    <div class="timer-box"><span class="timer-number days">00</span><span class="timer-label">Días</span></div>
-                    <div class="timer-box"><span class="timer-number hours">00</span><span class="timer-label">Horas</span></div>
-                    <div class="timer-box"><span class="timer-number minutes">00</span><span class="timer-label">Min</span></div>
-                    <div class="timer-box"><span class="timer-number seconds">00</span><span class="timer-label">Seg</span></div>
-                </div>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <span class="card-plan-tag">Pago Único</span>
-                    <h3>Sistema Básico</h3>
-                    <p class="price-summary">Lo esencial instalado de forma permanente. La base perfecta para gestionar todo tu catálogo sin cobros mensuales.</p>
-                    
-                    <div class="price-row">
-                        <span class="price-from">Precio </span>
-                        <div class="price" style="display:flex; flex-direction:column; line-height:1;">
-                            <span style="font-size:1.1rem; text-decoration:line-through; color:var(--muted); font-weight:600; margin-bottom:4px;">$1.200.000</span>
-                            $960.000
-                        </div>
-                    </div>
-                    <span class="price-period">COP — pago único</span>
-
-                    <div class="server-note">
-                        <div class="tier">
-                            <span class="tier-dot yellow"></span>
-                            <div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div>
-                        </div>
-                        <div class="tier">
-                            <span class="tier-dot green"></span>
-                            <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                        </div>
-                    </div>
-
-                    <div class="divider"></div>
-                    <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                        Ver beneficios <em class="toggle-icon">▾</em>
-                    </button>
-                    <ul class="features-list">
-                        <li>Tienda e inventario visual</li>
-                        <li>Control avanzado de ventas</li>
-                        <li>Hosting con tu propio nombre a través de GitHub</li>
-                        <li>Libertad para instalar en tu propio Hosting el frontend</li>
-                        <li><b>Incluye una implementación</b></li>
-                    </ul>
-                    <div class="card-actions">
-                        <button class="btn-detail" onclick="openModal('unico-basico')">📄 Ver detalles</button>
-                        <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Básico%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract btn-outline">Comprar Sistema</a>
-                    </div>
-                </div>
-
-                <div class="price-card premium-card">
-                    <div class="badge">TODO INCLUIDO</div>
-                    <span class="card-plan-tag">Pago Único</span>
-                    <h3>Sistema Premium</h3>
-                    <p class="price-summary">Las dos integraciones activas de por vida. El ecosistema completo para no depender de nadie y maximizar ganancias.</p>
-                    
-                    <div class="price-row">
-                        <span class="price-from">Precio </span>
-                        <div class="price" style="display:flex; flex-direction:column; line-height:1;">
-                            <span style="font-size:1.1rem; text-decoration:line-through; color:var(--muted); font-weight:600; margin-bottom:4px;">$2.200.000</span>
-                            $1.760.000
-                        </div>
-                    </div>
-                    <span class="price-period">COP — pago único</span>
-
-                    <div class="server-note">
-                        <div class="tier">
-                            <span class="tier-dot yellow"></span>
-                            <div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div>
-                        </div>
-                        <div class="tier">
-                            <span class="tier-dot green"></span>
-                            <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                        </div>
-                    </div>
-
-                    <div class="divider"></div>
-                    <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                        Ver beneficios <em class="toggle-icon">▾</em>
-                    </button>
-                    <ul class="features-list">
-                        <li>Sistema Básico completo</li>
-                        <li><b>Lectura de Códigos</b></li>
-                        <li><b>Recargas Automáticas</b></li>
-                        <li>Hosting con tu propio nombre a través de GitHub</li>
-                        <li>Libertad para instalar en tu propio Hosting el frontend</li>
-                        <li>Automatización total asegurada</li>
-                    </ul>
-                    <div class="card-actions">
-                        <button class="btn-detail" onclick="openModal('unico-premium')">📄 Ver detalles</button>
-                        <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Premium%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar Premium</a>
-                    </div>
-                </div>
-
-                <div class="price-card">
-                    <span class="card-plan-tag">Pago Único</span>
-                    <h3>Intermedio</h3>
-                    <p class="price-summary">Con una integración a tu elección para que empieces a automatizar entregas o pagos sin ataduras mensuales.</p>
-                    
-                    <div class="price-row">
-                        <span class="price-from">Precio </span>
-                        <div class="price" style="display:flex; flex-direction:column; line-height:1;">
-                            <span style="font-size:1.1rem; text-decoration:line-through; color:var(--muted); font-weight:600; margin-bottom:4px;">$1.700.000</span>
-                            $1.360.000
-                        </div>
-                    </div>
-                    <span class="price-period">COP — pago único</span>
-
-                    <div class="server-note">
-                        <div class="tier">
-                            <span class="tier-dot yellow"></span>
-                            <div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div>
-                        </div>
-                        <div class="tier">
-                            <span class="tier-dot green"></span>
-                            <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                        </div>
-                    </div>
-
-                    <div class="divider"></div>
-                    <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                        Ver beneficios <em class="toggle-icon">▾</em>
-                    </button>
-                    <ul class="features-list">
-                        <li>Sistema Básico completo</li>
-                        <li>Elige <b>UNA</b> integración:</li>
-                        <li>Lectura de Códigos o Recargas</li>
-                        <li>Hosting con tu propio nombre a través de GitHub</li>
-                        <li>Libertad para instalar en tu propio Hosting el frontend</li>
-                        <li><b>Incluye una implementación</b></li>
-                    </ul>
-                    <div class="card-actions">
-                        <button class="btn-detail" onclick="openModal('unico-inter')">📄 Ver detalles</button>
-                        <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Intermedio%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract btn-outline">Comprar Intermedio</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="plan-derechos" style="display:none;opacity:0;max-width:540px;margin:0 auto;">
-            <div class="global-discount-banner">
-                <h3>🔥 ¡20% DE DESCUENTO APLICADO! 🔥</h3>
-                <p>Durante el mes de abril, cada página tendrá un 20% de descuento automático. ¡Aprovecha ahora!</p>
-                <div class="timer-container">
-                    <div class="timer-box"><span class="timer-number days">00</span><span class="timer-label">Días</span></div>
-                    <div class="timer-box"><span class="timer-number hours">00</span><span class="timer-label">Horas</span></div>
-                    <div class="timer-box"><span class="timer-number minutes">00</span><span class="timer-label">Min</span></div>
-                    <div class="timer-box"><span class="timer-number seconds">00</span><span class="timer-label">Seg</span></div>
-                </div>
-            </div>
-
-            <div class="price-card premium-card" style="text-align:center;">
-                <div class="badge">PROPIEDAD ABSOLUTA</div>
-                
-                <span class="card-plan-tag" style="display:block;">Licencia Completa</span>
-                <h3>Código Fuente & Derechos</h3>
-                <p class="price-summary">Crea tu propio SaaS sin ningún límite. Modifica y escala la plataforma bajo tus propias reglas e imagen corporativa.</p>
-                
-                <div class="price-row" style="justify-content:center;">
-                    <span class="price-from">Precio </span>
-                    <div class="price" style="display:flex; flex-direction:column; line-height:1;">
-                        <span style="font-size:1.2rem; text-decoration:line-through; color:var(--muted); font-weight:600; margin-bottom:4px;">$3.500.000</span>
-                        $2.800.000
-                    </div>
-                </div>
+                <div class="badge">MEJOR VALOR</div>
+                <span class="card-plan-tag">De por Vida</span>
+                <h3>Códigos Permanente</h3>
+                <p class="price-summary">Un solo pago y la página es tuya para siempre. Sin renovaciones ni sorpresas mensuales. La opción más inteligente.</p>
+                <div class="price-row"><span class="price-from">Precio </span><div class="price">$1.500.000</div></div>
                 <span class="price-period">COP — pago único</span>
-
-                <div style="background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; border-radius: 12px; padding: 15px; margin: 20px 0; text-align: center;">
-                    <span style="font-size: 1.5rem; display: block; margin-bottom: 5px;">🎁</span>
-                    <strong style="color: #10b981; font-size: 1.15rem; display: block; margin-bottom: 5px;">¡-$500.000 COP de Descuento!</strong>
-                    <span style="color: var(--text-gray); font-size: 0.9rem; display: block; line-height: 1.4;">Se aplica si proporcionas e instalamos el sistema directamente en <b>tu propio hosting</b>.</span>
-                </div>
-
                 <div class="server-note">
-                    <div class="tier">
-                        <span class="tier-dot yellow"></span>
-                        <div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div>
-                    </div>
-                    <div class="tier">
-                        <span class="tier-dot green"></span>
-                        <div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div>
-                    </div>
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Incluido. Sujeto a posibles interrupciones ocasionales.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
                 </div>
-
                 <div class="divider"></div>
-                <button class="benefits-toggle" onclick="toggleBenefits(this)">
-                    Ver beneficios <em class="toggle-icon">▾</em>
-                </button>
-                <ul class="features-list" style="text-align:left;">
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list">
+                    <li>Todo lo del plan mensual</li>
+                    <li><b>Pago único, sin renovaciones</b></li>
+                    <li>Compatible con Gmail, Outlook o dominio propio</li>
+                    <li>Hosting permanente incluido de por vida</li>
+                    <li>Actualizaciones de mantenimiento incluidas</li>
+                    <li><b>Incluye una implementación completa</b></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-detail" onclick="openModal('codigos-vida')">📄 Ver explicación detallada</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20la%20Página%20de%20Códigos%20de%20por%20vida" target="_blank" class="btn-contract">Comprar De Por Vida</a>
+                </div>
+            </div>
+
+            <!-- Derechos totales -->
+            <div class="price-card">
+                <span class="card-plan-tag">Derechos Totales</span>
+                <h3>Códigos con Derechos</h3>
+                <p class="price-summary">Adquiere el código fuente completo. Modifícala, revéndela o úsala bajo tu propia marca sin ninguna restricción.</p>
+                <div class="price-row"><span class="price-from">Precio </span><div class="price">$2.500.000</div></div>
+                <span class="price-period">COP — pago único</span>
+                <div class="server-note">
+                    <div class="tier"><span class="tier-dot yellow"></span><div><strong>Servidor Estándar</strong> — Opcional. Sujeto a posibles interrupciones ocasionales.</div></div>
+                    <div class="tier"><span class="tier-dot green"></span><div><strong>Servidor Premium</strong> — +$30.000/mes. Garantía de servicio continuo 24/7.</div></div>
+                </div>
+                <div class="divider"></div>
+                <button class="benefits-toggle" onclick="toggleBenefits(this)">Ver beneficios <em class="toggle-icon">▾</em></button>
+                <ul class="features-list">
                     <li>Entrega total del código fuente</li>
-                    <li>Libertad para modificar el sistema</li>
-                    <li>Derechos comerciales para revender</li>
-                    <li>Crea tu propio negocio SaaS sin límites</li>
-                    <li>Hosting con tu propio nombre a través de GitHub</li>
-                    <li>Libertad para instalar en tu propio Hosting el frontend y backend</li>
+                    <li><b>Derechos comerciales para revender</b></li>
+                    <li>Libertad para modificar diseño y funciones</li>
+                    <li>Compatible con Gmail, Outlook o dominio propio</li>
+                    <li>Instálala en tu propio hosting sin depender de nosotros</li>
+                    <li>Clientes ilimitados bajo tu marca</li>
                     <li><b>Incluye guía técnica de despliegue</b></li>
                 </ul>
                 <div class="card-actions">
-                    <button class="btn-detail" onclick="openModal('derechos')">📄 Ver detalles completos</button>
-                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20el%20Código%20Fuente%20y%20Derechos%20Completos%20con%20el%20descuento%20del%2020%25" target="_blank" class="btn-contract">Comprar Derechos Totales</a>
+                    <button class="btn-detail" onclick="openModal('codigos-derechos')">📄 Ver explicación detallada</button>
+                    <a href="https://wa.me/573016149753?text=Hola,%20quiero%20los%20Derechos%20Totales%20de%20la%20Página%20de%20Códigos" target="_blank" class="btn-contract btn-outline">Comprar Derechos</a>
                 </div>
             </div>
-        </div>
-    </section>
-</div> 
 
+        </div><!-- /pricing-grid codigos -->
+
+        <!-- Nota aclaratoria -->
+        <div class="codigos-compare">
+            💡 <strong>¿Cuál elegir?</strong> Si apenas empiezas, prueba el plan mensual un mes. Si ya sabes que la necesitas, el pago de por vida te ahorra después de 15 meses. Si quieres ofrecerla a tus propios clientes como servicio, elige los Derechos Totales.
+        </div>
+
+    </div><!-- /plan-codigos -->
+</section>
+
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
     <div class="modal-box" id="modal-box">
         <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1565,6 +823,7 @@ footer {
     </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
     <span class="footer-logo">Stream<em>Manager</em> Pro</span>
     <p class="footer-tagline">La mejor herramienta para tu negocio de streaming.</p>
@@ -1577,364 +836,108 @@ footer {
     <p class="footer-copy">© 2026 <strong>Brallan Ariza</strong>. Todos los derechos reservados.</p>
 </footer>
 
-
-
 <script>
-    function iniciarTemporizadores() {
-        const endDate = new Date("May 1, 2026 00:00:00").getTime();
-
-        const x = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = endDate - now;
-
-            if (distance < 0) {
-                clearInterval(x);
-                document.querySelectorAll('.timer-container').forEach(el => el.style.display = 'none');
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            const strDays = String(days).padStart(2, '0');
-            const strHours = String(hours).padStart(2, '0');
-            const strMins = String(minutes).padStart(2, '0');
-            const strSecs = String(seconds).padStart(2, '0');
-
-            document.querySelectorAll('.timer-number.days').forEach(el => el.innerText = strDays);
-            document.querySelectorAll('.timer-number.hours').forEach(el => el.innerText = strHours);
-            document.querySelectorAll('.timer-number.minutes').forEach(el => el.innerText = strMins);
-            document.querySelectorAll('.timer-number.seconds').forEach(el => el.innerText = strSecs);
-        }, 1000);
-    }
-    
-    // Iniciar temporizador al cargar la página
-    document.addEventListener("DOMContentLoaded", iniciarTemporizadores);
-</script>
-
-
-
-<script id="script-script.js">/* script.js */
-/* =================================================================================
-   script.js - LÓGICA PRINCIPAL DE LA LANDING PAGE (StreamManager Pro)
-================================================================================= */
-
-/* ========================
-   1. CARRUSEL DE IMÁGENES
-======================== */
-const SLIDE_URLS = [
-    'app.streammanager.pro/tienda',
-    'app.streammanager.pro/adquisiciones',
-    'app.streammanager.pro/billetera',
-    'app.streammanager.pro/codigos',
-    'app.streammanager.pro/pantalla-5',
-    'app.streammanager.pro/pantalla-6',
-    'app.streammanager.pro/pantalla-7',
-];
-let current = 0;
-let autoTimer;
-const track = document.getElementById('carousel-track');
-const dots = document.querySelectorAll('.dot');
-const urlBar = document.getElementById('carousel-url');
-const TOTAL = 7;
-
-function goTo(n) {
-    current = (n + TOTAL) % TOTAL;
-    if (track) track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-    if (urlBar) urlBar.textContent = '🔒 ' + SLIDE_URLS[current];
+/* ── TEMPORIZADOR ── */
+function iniciarTemporizadores() {
+    const endDate = new Date("May 1, 2026 00:00:00").getTime();
+    const x = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = endDate - now;
+        if (distance < 0) { clearInterval(x); document.querySelectorAll('.timer-container').forEach(el => el.style.display='none'); return; }
+        const days=Math.floor(distance/(1000*60*60*24)), hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60)), minutes=Math.floor((distance%(1000*60*60))/(1000*60)), seconds=Math.floor((distance%(1000*60))/1000);
+        document.querySelectorAll('.timer-number.days').forEach(el=>el.innerText=String(days).padStart(2,'0'));
+        document.querySelectorAll('.timer-number.hours').forEach(el=>el.innerText=String(hours).padStart(2,'0'));
+        document.querySelectorAll('.timer-number.minutes').forEach(el=>el.innerText=String(minutes).padStart(2,'0'));
+        document.querySelectorAll('.timer-number.seconds').forEach(el=>el.innerText=String(seconds).padStart(2,'0'));
+    }, 1000);
 }
+document.addEventListener("DOMContentLoaded", iniciarTemporizadores);
 
-function next() { goTo(current + 1); }
-function prev() { goTo(current - 1); }
-
-function startAuto() { 
-    autoTimer = setInterval(next, 3500); 
-}
-
-function resetAuto() { 
-    clearInterval(autoTimer); 
-    startAuto(); 
-}
-
-const nextBtn = document.getElementById('next-btn');
-const prevBtn = document.getElementById('prev-btn');
-
-if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAuto(); });
-if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
-
-dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); resetAuto(); }));
-
-// Pausar el carrusel si el mouse está encima
-const carouselWrapper = document.querySelector('.carousel-wrapper');
-if (carouselWrapper) {
-    carouselWrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    carouselWrapper.addEventListener('mouseleave', startAuto);
-}
-
-startAuto();
-
-/* ========================
-   2. PESTAÑAS DE PRECIOS
-======================== */
+/* ── PESTAÑAS ── */
+const ALL_TABS = ['plan-mensual','plan-unico','plan-derechos','plan-codigos'];
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', function() {
-        // Quitar la clase active de todos los botones
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        
-        // Ocultar todos los contenedores de planes
-        ['plan-mensual','plan-unico','plan-derechos'].forEach(id => {
+        ALL_TABS.forEach(id => {
             const el = document.getElementById(id);
-            if (el) {
-                el.style.display = 'none';
-                el.style.opacity = '0';
-            }
+            if (el) { el.style.display='none'; el.style.opacity='0'; }
         });
-        
-        // Mostrar el contenedor seleccionado
         const t = document.getElementById(this.dataset.target);
         if (!t) return;
-        
-        const isGrid = this.dataset.target !== 'plan-derechos';
+        const isGrid = ['plan-mensual','plan-codigos'].includes(this.dataset.target);
         t.style.display = isGrid ? 'grid' : 'block';
-        
-        // Pequeño retraso para que la transición de opacidad funcione
-        setTimeout(() => { 
-            t.style.opacity = '1'; 
-            t.style.transition = 'opacity 0.35s'; 
-        }, 30);
+        // plan-codigos uses block wrapper, not grid itself
+        if (this.dataset.target === 'plan-codigos') t.style.display = 'block';
+        setTimeout(() => { t.style.opacity='1'; t.style.transition='opacity 0.35s'; }, 30);
     });
 });
 
-/* ========================
-   3. BOTÓN VER BENEFICIOS
-======================== */
+/* ── BENEFICIOS TOGGLE ── */
 function toggleBenefits(btn) {
     btn.classList.toggle('open');
-    if (btn.nextElementSibling) {
-        btn.nextElementSibling.classList.toggle('open');
-    }
+    if (btn.nextElementSibling) btn.nextElementSibling.classList.toggle('open');
 }
 
-/* ========================
-   4. DATA Y LÓGICA DE MODALES
-======================== */
+/* ── MODALES ── */
 const modals = {
-    basico: {
-        badge:'Plan Mensual', title:'Básico', price:'Desde $100.000', period:'COP / mes',
-        desc:'El plan de entrada perfecto para revendedores que están comenzando. Incluye todo lo esencial para gestionar tu inventario y atender a tus clientes de forma organizada, sin complicaciones.',
-        features:[
-            ['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],
-            ['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],
-            ['Inventario de cuentas centralizado','Administra todas tus cuentas de streaming en un panel claro y ordenado.'],
-            ['Control detallado de ventas y usuarios','Registra cada venta y asocia clientes a sus servicios fácilmente.'],
-            ['Hosting incluido en la mensualidad','Tu sistema alojado en nuestros servidores. Sin preocupaciones técnicas.'],
-            ['Panel de administración intuitivo','Gestiona todo tu negocio desde un solo lugar.'],
-            ['Soporte técnico personalizado','Asistencia rápida cuando la necesites en horario hábil.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Básico',ctaText:'Contratar Plan Básico →'
-    },
-    estandar: {
-        badge:'Plan Mensual · Más Popular', title:'Estándar', price:'Desde $150.000', period:'COP / mes',
-        desc:'El punto medio ideal: automatiza una parte crucial de tu operation eligiendo entre Lectura de Códigos o Recargas Automáticas por Bancolombia. Incluye todo lo del plan Básico más el módulo que más te convenga.',
-        features:[
-            ['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],
-            ['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],
-            ['Todo lo del plan Básico','Inventario, ventas, hosting y soporte incluidos.'],
-            ['Lectura de códigos de servicios','Valida y procesa códigos de plataformas de streaming sin errores manuales.'],
-            ['Recargas automáticas (Bancolombia)','Recibe pagos y acredita saldos automáticamente, sin intervención manual.'],
-            ['Elige UN módulo','Al contratar defines cuál de los dos módulos activar.'],
-            ['Incluye una implementación inicial','Te ayudamos a configurar e instalar el sistema por primera vez.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Estándar',ctaText:'Contratar Plan Estándar →'
-    },
-    premium: {
-        badge:'Plan Mensual · Completo', title:'Premium', price:'Desde $200.000', period:'COP / mes',
-        desc:'La solución más completa para negocios de streaming en crecimiento. Con ambos módulos activos y soporte prioritario, tu operación corre prácticamente sola.',
-        features:[
-            ['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],
-            ['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],
-            ['Todo lo del plan Estándar','Base completa más un módulo de automatización.'],
-            ['Lectura de códigos activa','Validación automática de todos los códigos de servicio de tus proveedores.'],
-            ['Recargas automáticas activas','Bancolombia integrado para cobros y acreditaciones automáticas de tus clientes.'],
-            ['Ambos módulos simultáneos','Los dos sistemas trabajando juntos para máxima automatización y eficiencia.'],
-            ['Soporte prioritario personalizado','Atención directa y prioritaria para resolver tus dudas.'],
-            ['Incluye dos implementaciones','Configuración y puesta a punto completa de ambos módulos en tu sistema.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Premium',ctaText:'Contratar Plan Premium →'
-    },
-    'unico-basico': {
-        badge:'Pago Único · 🔥 ¡Quedan 2 cupos!', title:'Sistema Básico', price:'<span style="font-size:1.4rem; text-decoration:line-through; color:var(--muted); font-weight:600;">$1.200.000</span> <br> Desde $900.000', period:'COP — pago único',
-        desc:'Paga una sola vez y el sistema es tuyo para instalarlo de forma permanente. Sin mensualidades. La base perfecta para gestionar todo tu catálogo.',
-        features:[
-            ['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],
-            ['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],
-            ['Tienda e inventario visual','Catálogo de productos atractivo y gestión de inventario de cuentas.'],
-            ['Control avanzado de ventas','Registro y seguimiento de ventas, finanzas y clientes.'],
-            ['Frontend en tu propio hosting', 'Libertad para instalar la tienda visual (la página) en tu servidor o gratis en GitHub.'],
-            ['Conexión a nuestra API matriz', 'Tu tienda procesará todo de forma segura a través de nuestro backend protegido. (No incluye código fuente backend).'],
-            ['Incluye una implementación','Puesta en marcha, instalación y configuración inicial en tu servidor.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Básico%20con%20el%20descuento%20del%2025%25',ctaText:'Comprar Sistema Básico →'
-    },
-    'unico-inter': {
-        badge:'Pago Único · 🔥 ¡Quedan 2 cupos!', title:'Sistema Intermedio', price:'<span style="font-size:1.4rem; text-decoration:line-through; color:var(--muted); font-weight:600;">$1.700.000</span> <br> Desde $1.275.000', period:'COP — pago único',
-        desc:'Todo el sistema base más una integración a tu elección para que empieces a automatizar entregas o pagos. Pagas una vez y es tuyo para siempre.',
-        features:[
-            ['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],
-            ['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],
-            ['Sistema Básico completo','Tienda, inventario, ventas y panel de administración.'],
-            ['Lectura de Códigos (opcional)','Módulo automatizado para validar códigos de plataformas de streaming.'],
-            ['Recargas Automáticas (opcional)','Integración directa con Bancolombia para acreditación de pagos automáticos.'],
-            ['Frontend en tu propio hosting', 'Libertad para instalar la tienda visual (la página) en tu servidor o gratis en GitHub.'],
-            ['Conexión a nuestra API matriz', 'Tu tienda procesará todo de forma segura a través de nuestro backend protegido. (No incluye código fuente backend).'],
-            ['Incluye una implementación','Instalación, despliegue y configuración completa del sistema y módulo.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Intermedio%20con%20el%20descuento%20del%2025%25',ctaText:'Comprar Sistema Intermedio →'
-    },
-    'unico-premium': {
-        badge:'Todo Incluido · 🔥 ¡Quedan 2 cupos!', title:'Sistema Premium', price:'<span style="font-size:1.4rem; text-decoration:line-through; color:var(--muted); font-weight:600;">$2.200.000</span> <br> Desde $1.650.000', period:'COP — pago único',
-        desc:'El ecosistema completo con las dos integraciones activas de por vida. Paga una vez, opera con total autonomía y no dependas de mensualidades para automatizar.',
-        features:[
-            ['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],
-            ['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],
-            ['Sistema Básico completo','Tienda visual, control de inventario, registro de ventas y finanzas.'],
-            ['Lectura de Códigos incluida','Validación automática e instantánea de códigos de plataformas de streaming.'],
-            ['Recargas Automáticas incluidas','Cobros, verificación y acreditaciones automáticas vía Bancolombia.'],
-            ['Frontend en tu propio hosting', 'Libertad para instalar la tienda visual (la página) en tu servidor o gratis en GitHub.'],
-            ['Conexión a nuestra API matriz', 'Tu tienda procesará todo de forma segura a través de nuestro backend protegido. (No incluye código fuente backend).'],
-            ['Automatización total asegurada','Tu negocio operando en piloto automático 24/7 sin intervención manual.'],
-            ['Incluye una implementación','Instalación, despliegue y configuración completa de todo el ecosistema.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Premium%20con%20el%20descuento%20del%2025%25',ctaText:'Comprar Sistema Premium →'
-    },
-    derechos: {
-        badge:'Licencia Completa · 🔥 ¡Quedan 2 cupos!', title:'Código Fuente & Derechos', price:'<span style="font-size:1.4rem; text-decoration:line-through; color:var(--muted); font-weight:600;">$3.500.000</span> <br> Desde $2.625.000', period:'COP — pago único',
-        desc:'Crea tu propio SaaS sin ningún límite. Adquieres el código fuente completo con derechos comerciales totales. Puedes modificarlo, personalizarlo y revenderlo bajo tu propia marca. Sin restricciones ni ataduras.',
-        features:[
-            ['🎁 Descuento de -$500.000 COP','Aplicable si proporcionas e instalamos el sistema en tu propio hosting privado.'],
-            ['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales si no usas tu propio servidor.'],
-            ['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7 (Si decides alojarlo con nosotros).'],
-            ['Entrega total del código fuente','Acceso completo, transparente y directo a todo el código sin cifrados ni limitaciones.'],
-            ['Libertad total para modificar','Cambia colores, funciones, lógicas, módulos o cualquier parte estructural del sistema.'],
-            ['Derechos comerciales absolutos','Revende el sistema como tuyo, cobra mensualidades a tus clientes y expande tu negocio.'],
-            ['Crea tu propio negocio SaaS','Monta tu propia plataforma matriz con tu marca, tus precios y tus propias reglas de mercado.'],
-            ['Hosting con tu propio nombre','Te enseñamos a instalarlo a través de GitHub Pages para tus propios clientes.'],
-            ['Hosting propio: $60.000 por año','El costo anual estimado de mantener un servidor y dominio propio activo.'],
-            ['Incluye guía técnica de despliegue','Documentación clara y concisa para instalar, configurar y desplegar el sistema en cualquier entorno.'],
-        ],
-        cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Código%20Fuente%20y%20Derechos%20Completos%20con%20el%20descuento%20del%2025%25',ctaText:'Comprar Derechos Totales →'
-    },
+    basico: { badge:'Plan Mensual', title:'Básico', price:'Desde $100.000', period:'COP / mes', desc:'El plan de entrada perfecto para revendedores que están comenzando. Incluye todo lo esencial para gestionar tu inventario y atender a tus clientes de forma organizada, sin complicaciones.', features:[['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],['Inventario de cuentas centralizado','Administra todas tus cuentas de streaming en un panel claro y ordenado.'],['Control detallado de ventas y usuarios','Registra cada venta y asocia clientes a sus servicios fácilmente.'],['Hosting incluido en la mensualidad','Tu sistema alojado en nuestros servidores. Sin preocupaciones técnicas.'],['Panel de administración intuitivo','Gestiona todo tu negocio desde un solo lugar.'],['Soporte técnico personalizado','Asistencia rápida cuando la necesites.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Básico', ctaText:'Contratar Plan Básico →' },
+    estandar: { badge:'Plan Mensual · Más Popular', title:'Estándar', price:'Desde $150.000', period:'COP / mes', desc:'El punto medio ideal: automatiza una parte crucial de tu operación eligiendo entre Lectura de Códigos o Recargas Automáticas por Bancolombia.', features:[['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],['Todo lo del plan Básico','Inventario, ventas, hosting y soporte incluidos.'],['Lectura de códigos de servicios','Valida y procesa códigos de plataformas de streaming sin errores manuales.'],['Recargas automáticas (Bancolombia)','Recibe pagos y acredita saldos automáticamente, sin intervención manual.'],['Elige UN módulo','Al contratar defines cuál de los dos módulos activar.'],['Incluye una implementación inicial','Te ayudamos a configurar e instalar el sistema por primera vez.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Estándar', ctaText:'Contratar Plan Estándar →' },
+    premium: { badge:'Plan Mensual · Completo', title:'Premium', price:'Desde $200.000', period:'COP / mes', desc:'La solución más completa. Con ambos módulos activos y soporte prioritario, tu operación corre prácticamente sola.', features:[['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],['Todo lo del plan Estándar','Base completa más un módulo de automatización.'],['Lectura de códigos activa','Validación automática de todos los códigos de servicio.'],['Recargas automáticas activas','Bancolombia integrado para cobros y acreditaciones automáticas.'],['Ambos módulos simultáneos','Los dos sistemas trabajando juntos para máxima automatización.'],['Soporte prioritario personalizado','Atención directa y prioritaria en cualquier momento.'],['Incluye dos implementaciones','Configuración y puesta a punto completa de ambos módulos.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Plan%20Mensual%20Premium', ctaText:'Contratar Plan Premium →' },
+    'unico-basico': { badge:'Pago Único · 🔥 ¡Quedan 2 cupos!', title:'Sistema Básico', price:'<span style="font-size:1.4rem;text-decoration:line-through;color:var(--muted);font-weight:600;">$1.200.000</span><br>Desde $960.000', period:'COP — pago único', desc:'Paga una sola vez y el sistema es tuyo para instalarlo de forma permanente. Sin mensualidades.', features:[['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],['Tienda e inventario visual','Catálogo de productos atractivo y gestión de inventario.'],['Control avanzado de ventas','Registro y seguimiento de ventas, finanzas y clientes.'],['Frontend en tu propio hosting','Libertad para instalar la tienda en tu servidor o gratis en GitHub.'],['Conexión a nuestra API matriz','Tu tienda procesará todo de forma segura a través de nuestro backend protegido.'],['Incluye una implementación','Puesta en marcha, instalación y configuración inicial.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Básico%20con%20el%20descuento%20del%2020%25', ctaText:'Comprar Sistema Básico →' },
+    'unico-inter': { badge:'Pago Único · 🔥 ¡Quedan 2 cupos!', title:'Sistema Intermedio', price:'<span style="font-size:1.4rem;text-decoration:line-through;color:var(--muted);font-weight:600;">$1.700.000</span><br>Desde $1.360.000', period:'COP — pago único', desc:'Todo el sistema base más una integración a tu elección. Pagas una vez y es tuyo para siempre.', features:[['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],['Sistema Básico completo','Tienda, inventario, ventas y panel de administración.'],['Lectura de Códigos (opcional)','Módulo automatizado para validar códigos de plataformas.'],['Recargas Automáticas (opcional)','Integración directa con Bancolombia para acreditación de pagos.'],['Frontend en tu propio hosting','Libertad para instalar en tu servidor o gratis en GitHub.'],['Conexión a nuestra API matriz','Tu tienda procesará todo de forma segura.'],['Incluye una implementación','Instalación, despliegue y configuración completa.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Intermedio%20con%20el%20descuento%20del%2020%25', ctaText:'Comprar Sistema Intermedio →' },
+    'unico-premium': { badge:'Todo Incluido · 🔥 ¡Quedan 2 cupos!', title:'Sistema Premium', price:'<span style="font-size:1.4rem;text-decoration:line-through;color:var(--muted);font-weight:600;">$2.200.000</span><br>Desde $1.760.000', period:'COP — pago único', desc:'El ecosistema completo con las dos integraciones activas de por vida. Paga una vez, opera con total autonomía.', features:[['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],['Sistema Básico completo','Tienda visual, control de inventario, registro de ventas.'],['Lectura de Códigos incluida','Validación automática de códigos de plataformas.'],['Recargas Automáticas incluidas','Cobros, verificación y acreditaciones automáticas vía Bancolombia.'],['Frontend en tu propio hosting','Libertad para instalar en tu servidor o gratis en GitHub.'],['Conexión a nuestra API matriz','Tu tienda procesará todo de forma segura.'],['Automatización total asegurada','Tu negocio operando en piloto automático 24/7.'],['Incluye una implementación','Instalación y configuración completa de todo el ecosistema.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Sistema%20Premium%20con%20el%20descuento%20del%2020%25', ctaText:'Comprar Sistema Premium →' },
+    derechos: { badge:'Licencia Completa · 🔥 ¡Quedan 2 cupos!', title:'Código Fuente & Derechos', price:'<span style="font-size:1.4rem;text-decoration:line-through;color:var(--muted);font-weight:600;">$3.500.000</span><br>Desde $2.800.000', period:'COP — pago único', desc:'Adquieres el código fuente completo con derechos comerciales totales. Modifícalo, personalízalo y revéndelo bajo tu propia marca. Sin restricciones.', features:[['🎁 Descuento -$500.000 COP','Aplicable si proporcionas e instalamos el sistema en tu propio hosting privado.'],['Servidor Estándar (Opcional)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000/mes)','Garantía de servicio continuo 24/7.'],['Entrega total del código fuente','Acceso completo y directo a todo el código sin cifrados.'],['Libertad total para modificar','Cambia colores, funciones, lógicas y módulos.'],['Derechos comerciales absolutos','Revende el sistema como tuyo, cobra mensualidades a tus clientes.'],['Crea tu propio negocio SaaS','Monta tu plataforma con tu marca, tus precios y tus reglas.'],['Hosting con tu propio nombre','GitHub Pages para tus propios clientes.'],['Hosting propio: ~$60.000/año','Costo estimado anual de servidor y dominio propio.'],['Incluye guía técnica de despliegue','Documentación clara para instalar en cualquier entorno.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20el%20Código%20Fuente%20y%20Derechos%20Completos%20con%20el%20descuento%20del%2020%25', ctaText:'Comprar Derechos Totales →' },
+
+    /* ── PÁGINA DE CÓDIGOS ── */
+    'codigos-mensual': { badge:'Pág. de Códigos · Mensual', title:'Códigos Mensual', price:'Desde $100.000', period:'COP / mes', desc:'Una página independiente donde tus clientes verifican sus credenciales de acceso (correo del proveedor + contraseña). Compatible con Gmail, Outlook o dominio propio. Paga mes a mes sin compromisos.', features:[['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],['Portal de verificación de credenciales','Tus clientes ingresan su correo y contraseña del servicio para verificar su acceso.'],['Compatible con Gmail','Funciona con cuentas Google / Gmail como correo origen.'],['Compatible con Outlook','Funciona con cuentas Microsoft / Outlook como correo origen.'],['Compatible con dominio propio','Conéctala a tu propio dominio para una imagen profesional.'],['Diseño adaptado a tu marca','Colores, logo y nombre personalizables.'],['Hosting incluido','Alojado en nuestros servidores sin costo adicional.'],['Soporte técnico personalizado','Asistencia rápida cuando la necesites.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20la%20Página%20de%20Códigos%20mensual', ctaText:'Contratar Mensual →' },
+    'codigos-vida': { badge:'Pág. de Códigos · Pago Único', title:'Códigos Permanente', price:'$1.500.000', period:'COP — pago único', desc:'Un solo pago y la página de códigos es tuya para siempre. Tus clientes podrán verificar sus credenciales en cualquier momento sin que tengas que pagar ninguna mensualidad adicional.', features:[['Servidor Estándar (Incluido)','Sujeto a posibles interrupciones ocasionales.'],['Servidor Premium (+$30.000)','Garantía de servicio continuo 24/7.'],['Todo lo del plan mensual','Portal de verificación, diseño personalizado, hosting incluido.'],['Pago único definitivo','Sin renovaciones, sin sorpresas. Un pago, para siempre.'],['Compatible con Gmail, Outlook o dominio propio','Elige el correo origen que mejor se adapte a tu operación.'],['Actualizaciones de mantenimiento','Mejoras y correcciones incluidas sin costo adicional.'],['Una implementación completa incluida','Configuración, instalación y puesta en marcha de la página.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20la%20Página%20de%20Códigos%20de%20por%20vida', ctaText:'Comprar De Por Vida →' },
+    'codigos-derechos': { badge:'Pág. de Códigos · Derechos Totales', title:'Códigos con Derechos', price:'$2.500.000', period:'COP — pago único', desc:'Adquieres el código fuente completo de la Página de Códigos con derechos comerciales totales. Revéndela, personalízala o úsala como base para tu propio servicio sin ningún límite.', features:[['Entrega total del código fuente','Todo el código sin cifrados, sin restricciones, completamente tuyo.'],['Derechos comerciales para revender','Véndela a tus propios clientes bajo tu marca y a tu precio.'],['Libertad para modificar','Cambia diseño, lógica, colores, nombre, funciones y más.'],['Compatible con Gmail, Outlook o dominio propio','Configúrala para cualquier tipo de correo origen.'],['Instálala en tu propio hosting','Sin depender de nuestros servidores. Máxima autonomía.'],['Clientes ilimitados','Ofrécela a tantos clientes como quieras sin pagar royalties.'],['Guía técnica de despliegue','Documentación clara para instalar y configurar en cualquier entorno.']], cta:'https://wa.me/573016149753?text=Hola,%20quiero%20los%20Derechos%20Totales%20de%20la%20Página%20de%20Códigos', ctaText:'Comprar Derechos Totales →' },
 };
 
 function openModal(key) {
-    const d = modals[key]; 
-    if (!d) return;
-    
+    const d = modals[key]; if (!d) return;
     document.getElementById('modal-content').innerHTML = `
         <span class="modal-badge">${d.badge}</span>
         <div class="modal-title">${d.title}</div>
-        <div class="modal-price-box" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+        <div class="modal-price-box">
             <span class="modal-price">${d.price}</span>
             <span class="modal-price-period">${d.period}</span>
         </div>
         <p class="modal-desc">${d.desc}</p>
         <div class="modal-features-title">¿Qué incluye?</div>
         <ul class="modal-features-list">
-            ${d.features.map(f => `<li><span class="ck">✓</span><div><b>${f[0]}</b><br><span style="font-size:0.95rem;color:var(--muted)">${f[1]}</span></div></li>`).join('')}
+            ${d.features.map(f=>`<li><span class="ck">✓</span><div><b>${f[0]}</b><br><span style="font-size:0.95rem;color:var(--muted)">${f[1]}</span></div></li>`).join('')}
         </ul>
-        <a href="${d.cta}" target="_blank" class="modal-cta">💬 ${d.ctaText}</a>
-    `;
-    
+        <a href="${d.cta}" target="_blank" class="modal-cta">💬 ${d.ctaText}</a>`;
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
 }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow=''; }
+function closeModalOutside(e) { if (e.target===document.getElementById('modal-overlay')) closeModal(); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
-function closeModal() { 
-    document.getElementById('modal-overlay').classList.remove('open'); 
-    document.body.style.overflow = ''; 
-}
-
-function closeModalOutside(e) { 
-    if (e.target === document.getElementById('modal-overlay')) {
-        closeModal();
-    }
-}
-
-document.addEventListener('keydown', e => { 
-    if(e.key === 'Escape') closeModal(); 
-});
-
-
-/* ========================
-   5. ANIMACIONES ON SCROLL
-======================== */
+/* ── REVEAL ── */
 const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { 
-        if (e.isIntersecting) {
-            e.target.classList.add('active');
-            observer.unobserve(e.target);
-        } 
-    });
-}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); observer.unobserve(e.target); } });
+}, { threshold:0.08, rootMargin:'0px 0px -30px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+/* ── NAVBAR ── */
+window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY>40); });
 
-/* ========================
-   6. NAVBAR SCROLL EFFECT
-======================== */
-window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    if (navbar) {
-        navbar.classList.toggle('scrolled', window.scrollY > 40);
-    }
-});
-
-
-/* ========================
-   7. THEME TOGGLE (DARK/LIGHT MODE)
-======================== */
-const themeToggleBtn = document.getElementById('theme-toggle');
+/* ── DARK/LIGHT MODE ── */
+const themeBtn = document.getElementById('theme-toggle');
 const iconLight = document.querySelector('.theme-icon-light');
 const iconDark = document.querySelector('.theme-icon-dark');
-
-// Función para establecer el tema
 function setTheme(theme) {
-    if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        if (iconLight) iconLight.style.display = 'none';
-        if (iconDark) iconDark.style.display = 'inline';
-        localStorage.setItem('streammanager_theme', 'dark');
-    } else {
-        document.documentElement.removeAttribute('data-theme');
-        if (iconLight) iconLight.style.display = 'inline';
-        if (iconDark) iconDark.style.display = 'none';
-        localStorage.setItem('streammanager_theme', 'light');
-    }
+    if (theme==='dark') { document.documentElement.setAttribute('data-theme','dark'); if(iconLight)iconLight.style.display='none'; if(iconDark)iconDark.style.display='inline'; localStorage.setItem('streammanager_theme','dark'); }
+    else { document.documentElement.removeAttribute('data-theme'); if(iconLight)iconLight.style.display='inline'; if(iconDark)iconDark.style.display='none'; localStorage.setItem('streammanager_theme','light'); }
 }
-
-// Inicializar el tema basado en localStorage o preferencia del sistema
-const savedTheme = localStorage.getItem('streammanager_theme');
-if (savedTheme) {
-    setTheme(savedTheme);
-} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    setTheme('dark');
-}
-
-// Evento de clic en el botón
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
-            setTheme('light');
-        } else {
-            setTheme('dark');
-        }
-    });
-}</script>
+const saved = localStorage.getItem('streammanager_theme');
+if (saved) setTheme(saved);
+else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+if (themeBtn) themeBtn.addEventListener('click', () => { setTheme(document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark'); });
+</script>
 </body>
 </html>
